@@ -41,7 +41,7 @@ namespace Zombies.Core
             }
         }
         
-        public T GetComponent<T>() where T : CoreComponent
+        public T GetCoreComponent<T>() where T : CoreComponent
         {
             foreach (CoreComponent comp in _components)
             {
@@ -54,7 +54,7 @@ namespace Zombies.Core
             return null;
         }
 
-        public T GetComponent<T>(ref T comp) where T : CoreComponent
+        public T GetCoreComponent<T>(ref T comp) where T : CoreComponent
         {
             comp = GetComponent<T>();
             return comp;
