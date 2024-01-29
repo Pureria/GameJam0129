@@ -11,7 +11,9 @@ namespace Zombies.Input
         public Vector2 ViewPoint;
         public bool InteractInput;
         public bool ShotInput;
+        public bool ReloadInput;
         
         public void UseShotInput() => ShotInput = false;
+        public void UseReloadInput() => ReloadInput = false;
     }
 }

@@ -46,5 +46,17 @@ namespace Zombies.Input
 
             _inputSO.ViewPoint = inputValue;
         }
+
+        public void OnReload(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                _inputSO.ReloadInput = true;
+            }
+            else if (context.canceled)
+            {
+                _inputSO.ReloadInput = false;
+            }
+        }
     }
 }

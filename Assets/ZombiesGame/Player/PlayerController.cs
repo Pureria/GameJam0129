@@ -71,6 +71,13 @@ namespace Zombies.Player
             _stateMachine.FixedUpdate();
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Vector3 pos = transform.position;
+            Gizmos.DrawLine(pos, pos + transform.up * _stateInfo.InteractDistance);
+        }
+
         private void Move(Vector2 moveInput, float speed)
         {
             _movement.Move(moveInput, speed);
