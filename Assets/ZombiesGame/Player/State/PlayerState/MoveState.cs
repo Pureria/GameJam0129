@@ -14,16 +14,18 @@ namespace Zombies.Player.State
 
         public override void Enter()
         {
-            
+            base.Enter();
         }
 
         public override void Exit()
         {
-            
+            base.Exit();
         }
 
         public override void LogicUpdate()
         {
+            base.LogicUpdate();
+            
             if (_inputSO.MoveInput == Vector2.zero) _endState = true;
             
             if (_inputSO.InteractInput)
@@ -35,12 +37,14 @@ namespace Zombies.Player.State
 
         public override void FixedUpdate()
         {
+            base.FixedUpdate();
+            
             _stateEvent.MoveEvent?.Invoke(_inputSO.MoveInput, _stateInfo.MoveSpeed);
         }
 
         public override void AnimationTrigger()
         {
-            
+            base.AnimationTrigger();
         }
     }
 }

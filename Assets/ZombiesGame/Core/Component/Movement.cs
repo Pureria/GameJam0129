@@ -10,14 +10,19 @@ namespace Zombies.Core
         private bool _canMove;
         private Rigidbody2D _rb;
 
-        private void Start()
+        protected override void Awake()
         {
-            _canMove = true;
-
+            base.Awake();
+            
             if (!transform.root.transform.TryGetComponent<Rigidbody2D>(out _rb))
             {
                 Debug.Log("rootオブジェクトにRigidbody2Dが存在しません。");
             }
+        }
+        
+        private void Start()
+        {
+            _canMove = true;
         }
         
         public void SetCanMove(bool canMove) { _canMove = canMove; }

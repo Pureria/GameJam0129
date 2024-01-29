@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zombies.Input;
 using Zombies.Core;
 using Zombies.Player.State;
 using Zombies.State;
+using StateMachine = Zombies.State.StateMachine;
 
 namespace Zombies.Player
 {
@@ -13,6 +15,8 @@ namespace Zombies.Player
     {
         [Header("Info")]
         [SerializeField] private PlayerStateInfo _stateInfo;
+
+        [SerializeField] private LayerMask _interactLayer;
         
         [Header("Current Data")]
         [SerializeField] private InputSO _inputSO;
@@ -41,20 +45,15 @@ namespace Zombies.Player
 
             _movement = _core.GetCoreComponent<Movement>();
             _interact = _core.GetCoreComponent<Interact>();
-
-            _interact.InteractEvent += test;
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
-            
+
             _stateMachine = new StateMachine(_idleState);
+            
+            if(_stateMachine == null) Debug.LogError("StateMachineが存在しません。");
         }
-
-        private void test(Transform tes)
-        {
-            Debug.Log($"{transform.name}：{tes.name}にインタラクトされた");
-        }
-
+        
         private void OnEnable()
         {
             _stateEventSO.MoveEvent += Move;
@@ -96,7 +95,7 @@ namespace Zombies.Player
 
         private void Interact()
         {
-            _interact.FindInteract(this.transform, transform.position, transform.up, _stateInfo.InteractDistance);
+            _interact.FindInteract(this.transform, transform.position, transform.up, _stateInfo.InteractDistance, _interactLayer);
         }
 
         private void ChangeState()
