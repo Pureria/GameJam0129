@@ -7,14 +7,14 @@ namespace Zombies.Core
 {
     public class Interact : CoreComponent
     {
-        public Action<Transform> InteractEvent;
+        public Action<Core> InteractEvent;
         
-        public void CallInteractEvent(Transform target)
+        public void CallInteractEvent(Core targetCore)
         {
-            InteractEvent?.Invoke(target);
+            InteractEvent?.Invoke(targetCore);
         }
         
-        public void FindInteract(Transform me, Vector2 origin, Vector2 direction, float distance, LayerMask interactLayer)
+        public void FindInteract(Core core, Vector2 origin, Vector2 direction, float distance, LayerMask interactLayer)
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, transform.up, distance, interactLayer);
             
@@ -28,7 +28,7 @@ namespace Zombies.Core
                 Interact tInteract = tCore.GetCoreComponent<Interact>();
                 if (tInteract == null) continue;
 
-                tInteract.CallInteractEvent(me);
+                tInteract.CallInteractEvent(core);
                 break;
             }
             

@@ -95,7 +95,7 @@ namespace Zombies.Player
 
         private void Interact()
         {
-            _interact.FindInteract(this.transform, transform.position, transform.up, _stateInfo.InteractDistance, _interactLayer);
+            _interact.FindInteract(_core, transform.position, transform.up, _stateInfo.InteractDistance, _interactLayer);
         }
 
         private void ChangeState()

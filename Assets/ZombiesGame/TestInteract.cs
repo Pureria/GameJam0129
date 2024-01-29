@@ -19,9 +19,9 @@ namespace Zombies
             _interact.InteractEvent += Interact;
         }
 
-        private void Interact(Transform tran)
+        private void Interact(Core.Core targetCore)
         {
-            Debug.Log($"{transform.name} : {tran.name}にインタラクトされました。");
+            Debug.Log($"{transform.name} : {targetCore.transform.root.name}にインタラクトされました。");
         }
     }
 }
