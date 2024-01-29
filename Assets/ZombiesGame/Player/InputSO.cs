@@ -15,5 +15,6 @@ namespace Zombies.Input
         
         public void UseShotInput() => ShotInput = false;
         public void UseReloadInput() => ReloadInput = false;
+        public void UseInteractInput() => InteractInput = false;
     }
 }

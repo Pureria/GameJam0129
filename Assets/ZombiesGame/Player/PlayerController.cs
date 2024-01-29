@@ -23,6 +23,7 @@ namespace Zombies.Player
 
         private Core.Core _core;
         private Movement _movement;
+        private Interact _interact;
 
         private StateMachine _stateMachine;
 
@@ -39,6 +40,7 @@ namespace Zombies.Player
             }
 
             _movement = _core.GetCoreComponent<Movement>();
+            _interact = _core.GetCoreComponent<Interact>();
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
@@ -49,11 +51,13 @@ namespace Zombies.Player
         private void OnEnable()
         {
             _stateEventSO.MoveEvent += Move;
+            _stateEventSO.InteractEvent += Interact;
         }
 
         private void OnDisable()
         {
             _stateEventSO.MoveEvent -= Move;
+            _stateEventSO.InteractEvent -= Interact;
         }
 
         private void Update()
@@ -81,6 +85,11 @@ namespace Zombies.Player
         private void Move(Vector2 moveInput, float speed)
         {
             _movement.Move(moveInput, speed);
+        }
+
+        private void Interact()
+        {
+            _interact.FindInteract(this.transform, transform.position, transform.up, _stateInfo.InteractDistance);
         }
 
         private void ChangeState()

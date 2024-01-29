@@ -25,6 +25,12 @@ namespace Zombies.Player.State
         public override void LogicUpdate()
         {
             if (_inputSO.MoveInput == Vector2.zero) _endState = true;
+            
+            if (_inputSO.InteractInput)
+            {
+                //_inputSO.UseInteractInput();
+                _stateEvent.InteractEvent?.Invoke();
+            }
         }
 
         public override void FixedUpdate()
