@@ -41,11 +41,18 @@ namespace Zombies.Player
 
             _movement = _core.GetCoreComponent<Movement>();
             _interact = _core.GetCoreComponent<Interact>();
+
+            _interact.InteractEvent += test;
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
             
             _stateMachine = new StateMachine(_idleState);
+        }
+
+        private void test(Transform tes)
+        {
+            Debug.Log($"{transform.name}：{tes.name}にインタラクトされた");
         }
 
         private void OnEnable()
