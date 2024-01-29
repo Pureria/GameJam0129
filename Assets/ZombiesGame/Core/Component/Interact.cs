@@ -16,7 +16,7 @@ namespace Zombies.Core
         
         public void FindInteract(Core core, Vector2 origin, Vector2 direction, float distance, LayerMask interactLayer)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, transform.up, distance, interactLayer);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, distance, interactLayer);
             
             foreach (RaycastHit2D hit in hits)
             {

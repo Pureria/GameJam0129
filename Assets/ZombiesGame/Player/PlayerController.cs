@@ -26,6 +26,8 @@ namespace Zombies.Player
         [Header("Component")]
         [SerializeField] private Animator _anim;
 
+        private bool _isRight;
+        
         private Core.Core _core;
         private Movement _movement;
         private Interact _interact;
@@ -53,6 +55,7 @@ namespace Zombies.Player
             _stateMachine = new StateMachine(_idleState);
             
             if(_stateMachine == null) Debug.LogError("StateMachineが存在しません。");
+            _isRight = true;
         }
         
         private void OnEnable()
@@ -75,13 +78,15 @@ namespace Zombies.Player
             {
                 ChangeState();
             }
+            
+            CheckRotation();
         }
 
         private void FixedUpdate()
         {
             _stateMachine.FixedUpdate();
         }
-
+        
         private void OnDrawGizmosSelected()
         {
             #if UNITY_EDITOR
@@ -109,13 +114,47 @@ namespace Zombies.Player
         private void Move(Vector2 moveInput, float speed)
         {
             _movement.Move(moveInput, speed);
+
+            if (_inputSO.MoveInput.x > 0) _anim.SetBool("isRightInput", true);
+            else _anim.SetBool("isRightInput", false);
         }
 
         private void Interact()
         {
             Vector2 pos = transform.position;
-            _interact.FindInteract(_core, pos, (_inputSO.ViewPoint - pos).normalized, _stateInfo.InteractDistance,
+            Vector3 lookPos = _inputSO.ViewPoint;
+            lookPos.z = 1;
+            lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+            
+            _interact.FindInteract(_core, pos, (Vector2)lookPos.normalized, _stateInfo.InteractDistance,
                 _interactLayer);
+        }
+
+        private void CheckRotation()
+        {
+            Vector2 pos = transform.position;
+            Vector3 lookPos = _inputSO.ViewPoint;
+            lookPos.z = 1;
+            lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+            
+            if (_isRight)
+            {
+                if (lookPos.x < pos.x) Flip();
+            }
+            else
+            {
+                if (lookPos.x > pos.x) Flip();
+            }
+        }
+
+        private void Flip()
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = scale.x * -1;
+            transform.localScale = scale;
+            _isRight = !_isRight;
+
+            _anim.SetBool("isPlayerRight", _isRight);
         }
         
         private void ChangeState()
