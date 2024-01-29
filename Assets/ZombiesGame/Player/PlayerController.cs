@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Zombies.Input;
 using Zombies.Core;
@@ -83,9 +84,26 @@ namespace Zombies.Player
 
         private void OnDrawGizmosSelected()
         {
+            #if UNITY_EDITOR
             Gizmos.color = Color.red;
             Vector3 pos = transform.position;
-            Gizmos.DrawLine(pos, pos + transform.up * _stateInfo.InteractDistance);
+
+            if (EditorApplication.isPlaying)
+            {
+                Vector3 lookPos = _inputSO.ViewPoint;
+                lookPos.z = 1;
+                lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+                
+                //DrawLineでposからlookPosの方向に線を引く、この時、線の長さは必ずInteractDistanceになる
+                Gizmos.DrawLine((Vector2)pos, (Vector2)pos + ((Vector2)lookPos - (Vector2)pos).normalized * _stateInfo.InteractDistance);
+                
+                Gizmos.DrawSphere(lookPos, 0.5f);
+            }
+            else
+            {
+                Gizmos.DrawLine(pos, pos + transform.up * _stateInfo.InteractDistance);
+            }
+            #endif
         }
 
         private void Move(Vector2 moveInput, float speed)
@@ -95,9 +113,11 @@ namespace Zombies.Player
 
         private void Interact()
         {
-            _interact.FindInteract(_core, transform.position, transform.up, _stateInfo.InteractDistance, _interactLayer);
+            Vector2 pos = transform.position;
+            _interact.FindInteract(_core, pos, (_inputSO.ViewPoint - pos).normalized, _stateInfo.InteractDistance,
+                _interactLayer);
         }
-
+        
         private void ChangeState()
         {
             switch (_stateMachine.CurrentState)
