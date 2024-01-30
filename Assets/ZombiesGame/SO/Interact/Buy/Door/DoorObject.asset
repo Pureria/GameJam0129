@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DoorObject
   m_EditorClassIdentifier: 
   _name: Door
-  _priva: 250
+  _priva: 750
