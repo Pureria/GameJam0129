@@ -26,7 +26,7 @@ namespace Zombies.Gun
             }
         }
 
-        public void Shot(Vector2 to)
+        public void Shot(Vector2 to, Core.Core pCore)
         {
             if (_currentAmmo <= 0 ||
                 _isReload ||
@@ -37,9 +37,9 @@ namespace Zombies.Gun
 
             _shotTime = Time.time;
             _currentAmmo--;
-            
-            //TODO::弾の生成と発射
-            //muzzleからtoの方向に飛ばす
+            GameObject ammo = Instantiate(_ammoPrefab, _muzzle.position, Quaternion.identity);
+            Ammo ammoScript = ammo.GetComponent<Ammo>();
+            ammoScript.SetParam(to, 10, _gunInfo.Damage, pCore);
         }
 
         public void StartReload()
@@ -61,7 +61,7 @@ namespace Zombies.Gun
             }
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             _currentAmmo = _gunInfo.MaxAmmo;
             _currentMagazine = _gunInfo.MagazineSize;
