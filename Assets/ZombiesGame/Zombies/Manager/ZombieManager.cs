@@ -13,11 +13,28 @@ namespace Zombies.Zombie
         //体力はbaseHealth + (baseHealth * (multipleHealth * (wave - 1)))にする
         [SerializeField] private float _baseHealth;
         [SerializeField] private float _multipleHealth;
+        [SerializeField] private AllZombieInfo _allZombieInfo;
+        [SerializeField] private Transform _playerTran;
 
         private void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(this.gameObject);
+        }
+
+        private void OnEnable()
+        {
+            _allZombieInfo.GetPlayerTransform += GetPlayerTran;
+        }
+
+        private void OnDisable()
+        {
+            _allZombieInfo.GetPlayerTransform -= GetPlayerTran;
+        }
+
+        private Transform GetPlayerTran()
+        {
+            return _playerTran;
         }
 
         public float GetMaxHealth()

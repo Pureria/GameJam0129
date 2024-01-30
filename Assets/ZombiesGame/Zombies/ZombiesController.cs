@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.XR;
 using Zombies.AI;
 using Zombies.Core;
 using Zombies.State;
@@ -34,6 +35,9 @@ namespace Zombies.Zombie
 
         private StateMachine _stateMachine;
 
+        private Zombie_IdleState _idleState;
+        private Zombie_MoveState _moveState;
+
         private void OnEnable()
         {
             _stateEventSO.SetCanMoveEvent += SetCanMove;
@@ -60,6 +64,10 @@ namespace Zombies.Zombie
             
             _agent.SetCanMove(true);
             _agent.SetSpeed(_infoSo.WalkSpeed);
+            
+            _idleState = new Zombie_IdleState(_anim, "idle", _infoSo, _stateEventSO);
+            _moveState = new Zombie_MoveState(_anim, "move", _infoSo, _stateEventSO);
+            _stateMachine = new StateMachine(_idleState);
         }
 
         private void Update()
@@ -68,6 +76,11 @@ namespace Zombies.Zombie
                 CheckBaricade();
             else
                 CheckTarget();
+
+            if (_stateMachine.CurrentState.EndState)
+            {
+                ChangeState();
+            }
         }
 
         /// <summary>
@@ -123,6 +136,22 @@ namespace Zombies.Zombie
                     tDamage.IsDamage(_infoSo.DamageAmount);
                     return;
                 }
+            }
+        }
+
+        private void ChangeState()
+        {
+            switch (_stateMachine.CurrentState)
+            {
+                case Zombie_IdleState:
+                    _stateMachine.ChangeState(_moveState);
+                    break;
+                
+                case Zombie_MoveState:
+                    break;
+                
+                default:
+                    break;
             }
         }
 
