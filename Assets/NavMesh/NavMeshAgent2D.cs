@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Zombies.AI
 {
     public class NavMeshAgent2D : MonoBehaviour
     {
         [Header("Steering")]
-        public float speed = 1.0f;
+        public float _speed = 1.0f;
         public float stoppingDistance = 0;
+
+        private bool _canMove;
 
         [HideInInspector]//常にUnityエディタから非表示
         private Vector2 trace_area=Vector2.zero;
@@ -20,15 +24,16 @@ namespace Zombies.AI
                 Trace(transform.position, value);
             }
         }
-        public bool SetDestination(Vector2 target)
+
+        private void Start()
         {
-            destination = target;
-            return true;
+            _canMove = true;
         }
+
 
         private void Trace(Vector2 current,Vector2 target)
         {
-            if (Vector2.Distance(current,target) <= stoppingDistance)
+            if (Vector2.Distance(current,target) <= stoppingDistance || !_canMove)
             {
                 return;
             }
@@ -44,7 +49,22 @@ namespace Zombies.AI
                 corner = path.corners[1];
             }
 
-            transform.position = Vector2.MoveTowards(current, corner, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(current, corner, _speed * Time.deltaTime);
+        }
+        public bool SetDestination(Vector2 target)
+        {
+            destination = target;
+            return true;
+        }
+
+        public void SetSpeed(float speed)
+        {
+            _speed = speed;
+        }
+
+        public void SetCanMove(bool canMove)
+        {
+            _canMove = canMove;
         }
     }
 }
