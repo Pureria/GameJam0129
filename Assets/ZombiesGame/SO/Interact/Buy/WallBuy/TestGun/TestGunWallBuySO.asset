@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126c7bff6fa53424c8f42b9b325b0564, type: 3}
+  m_Name: TestGunWallBuySO
+  m_EditorClassIdentifier: 
+  buyGunPrefab: {fileID: 7090124978041778135, guid: f893190f02b714f4aa276384561b821a, type: 3}

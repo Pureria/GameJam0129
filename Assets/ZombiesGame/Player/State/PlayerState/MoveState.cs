@@ -39,6 +39,11 @@ namespace Zombies.Player.State
                 _stateEvent.InteractEvent?.Invoke();
             }
             
+            if (_inputSO.ShotInput)
+            {
+                _stateEvent.ShotEvent?.Invoke();
+            }
+            
             if (_inputSO.ReloadInput)
             {
                 _stateEvent.ReloadEvent?.Invoke();
