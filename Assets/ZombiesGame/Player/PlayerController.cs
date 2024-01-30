@@ -16,8 +16,8 @@ namespace Zombies.Player
     {
         [Header("Info")]
         [SerializeField] private PlayerStateInfo _stateInfo;
-
         [SerializeField] private LayerMask _interactLayer;
+        [SerializeField] private Transform _gunRootTran;
         
         [Header("Current Data")]
         [SerializeField] private InputSO _inputSO;
@@ -54,7 +54,7 @@ namespace Zombies.Player
             _inventory = _core.GetCoreComponent<Inventory>();
 
             _states.Initialize(_stateInfo.InitHealth, _stateInfo.HealInterval, true, Dead, Damage, ChangeHealth);
-            _inventory.AddMoney(_stateInfo.InitMoney);
+            _inventory.Initialize(_stateInfo.InitMoney, _stateInfo.InitGun, _gunRootTran);
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);

@@ -40,22 +40,32 @@ namespace Zombies.Core
             if (_nowWeaponIndex + 1 >= _guns.Count) _nowWeaponIndex = 0;
             else _nowWeaponIndex++;
         }
-
-        //番号の武器へ切り替え
-        private void ChangeWeapon(int index)
-        {
-            AllWeaponHide();
-            _guns[index].gameObject.SetActive(true);
-        }
-
-        public void GetNewWeapon(GameObject getGun)
+        
+        public void AddGun(GameObject getGun)
         {
             GameObject gun = Instantiate(getGun, _gunRootTransform);
             gun.transform.parent = _gunRootTransform;
             if (gun.TryGetComponent<Gun.Gun>(out Gun.Gun gunScript))
             {
                 gunScript.Initialize();
-                _guns.Add(gunScript);
+
+                //ミュールキックは実装する予定なし！！
+                if (_guns.Count <= 2)
+                {
+                    //武器が2つ存在する場合は現在装備している武器を新しい武器に切り替える
+                    GameObject delGunObj = _guns[_nowWeaponIndex].gameObject;
+                    _guns[_nowWeaponIndex] = gunScript;
+                    Destroy(delGunObj);
+                    _guns[_nowWeaponIndex].Initialize();
+                }
+                else
+                {
+                    //追加したうえでその武器に切り替える
+                    _guns.Add(gunScript);
+                    gunScript.Initialize();
+                    _nowWeaponIndex += 1;
+                }
+                
             }
             else
             {
@@ -65,6 +75,13 @@ namespace Zombies.Core
 
         public Gun.Gun GetActiveGun() { return _guns[_nowWeaponIndex]; }
         public void SetActiveGun(int index) { _nowWeaponIndex = index; }
+
+        public void Initialize(int initMoney, GameObject initGun, Transform gunRootTran)
+        {
+            AddMoney(initMoney);
+            AddGun(initGun);
+            _gunRootTransform = gunRootTran;
+        }
         
         private void AllWeaponHide()
         {
@@ -72,6 +89,12 @@ namespace Zombies.Core
             {
                 gun.gameObject.SetActive(false);
             }
+        }
+        
+        private void ChangeWeapon(int index)
+        {
+            AllWeaponHide();
+            _guns[index].gameObject.SetActive(true);
         }
     }
 }
