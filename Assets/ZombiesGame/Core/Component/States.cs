@@ -16,6 +16,7 @@ namespace Zombies.Core
         private Action _changeHealthEvent;
         private bool _isAutoHeal;
         private bool _isHealthMax;
+        private bool _isDamageOne;
 
         public float Health => _health;
 
@@ -31,10 +32,13 @@ namespace Zombies.Core
 
             _isHealthMax = true;
             _damageTime = 0;
+            _isDamageOne = false;
         }
 
         public void Damage(float damage)
         {
+            if (_isDamageOne) damage = 1;
+            
             _damageTime = Time.time;
             _health -= damage;
             _damageEvent?.Invoke();
@@ -69,6 +73,11 @@ namespace Zombies.Core
             {
                 Heal(1f);
             }
+        }
+
+        public void SetDamageOne(bool isDamageOne)
+        {
+            _isDamageOne = isDamageOne;
         }
     }
 }

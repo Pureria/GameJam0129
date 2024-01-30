@@ -68,10 +68,14 @@ namespace Zombies.Zombie
             _idleState = new Zombie_IdleState(_anim, "idle", _infoSo, _stateEventSO);
             _moveState = new Zombie_MoveState(_anim, "move", _infoSo, _stateEventSO);
             _stateMachine = new StateMachine(_idleState);
+
+            _isBarricade = true;
         }
 
         private void Update()
         {
+            _stateMachine.LogicUpdate();
+            
             if(_isBarricade)
                 CheckBaricade();
             else
@@ -81,6 +85,17 @@ namespace Zombies.Zombie
             {
                 ChangeState();
             }
+        }
+
+        private void FixedUpdate()
+        {
+            _stateMachine.FixedUpdate();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _infoSo.AttackDistance);
         }
 
         /// <summary>
@@ -167,5 +182,10 @@ namespace Zombies.Zombie
         private void ChangeHealth(){}
         private void Damage(){ Debug.Log(($"{transform.name} :ダメージ"));}
         private void Dead(){ Debug.Log(($"{transform.name} :死亡"));}
+
+        public void Setup(Transform target)
+        {
+            SetTarget(target);
+        }
     }
 }

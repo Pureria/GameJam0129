@@ -15,4 +15,5 @@ MonoBehaviour:
   _walkSpeed: 2.5
   _runSpeed: 5
   _damageAmount: 40
-  _attackDistance: 0
+  _attackDistance: 1
+  _idleWaitTime: 2

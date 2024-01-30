@@ -16,5 +16,12 @@ namespace Zombies.Zombie
 
             _stateEventSO.SetCanMoveEvent?.Invoke(true);   
         }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            
+            _stateEventSO.MoveEvent?.Invoke();
+        }
     }
 }
