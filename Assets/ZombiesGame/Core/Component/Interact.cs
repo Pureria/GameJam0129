@@ -9,11 +9,13 @@ namespace Zombies.Core
     {
         public Action<Core> InteractEvent;
         
+        //インタラクトされたときに呼ばれる
         public void CallInteractEvent(Core targetCore)
         {
             InteractEvent?.Invoke(targetCore);
         }
         
+        //インタラクトできるモノを検索する
         public void FindInteract(Core core, Vector2 origin, Vector2 direction, float distance, LayerMask interactLayer)
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, distance, interactLayer);
