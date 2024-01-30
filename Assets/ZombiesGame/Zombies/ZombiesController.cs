@@ -18,8 +18,8 @@ namespace Zombies.Zombie
         [SerializeField] private LayerMask _barricadeLayer;
 
         [Header("CurrentData")] 
-        [SerializeField] private ZombieStateEventSO _stateEventSO;
         [SerializeField] private AllZombieInfo _allZombieInfo;
+        private ZombieStateEventSO _stateEventSO;
 
         [Header("Component")]
         [SerializeField] private NavMeshAgent2D _agent;
@@ -38,6 +38,11 @@ namespace Zombies.Zombie
         private Zombie_IdleState _idleState;
         private Zombie_MoveState _moveState;
         private Zombie_AttackState _attackState;
+
+        private void Awake()
+        {
+            _stateEventSO = new ZombieStateEventSO();
+        }
 
         private void OnEnable()
         {
@@ -61,7 +66,6 @@ namespace Zombies.Zombie
                 Debug.LogError("Coreが子オブジェクトに存在しません。");
                 return;
             }
-
             _states = _core.GetCoreComponent<States>();
             _states.Initialize(ZombieManager.Instance.GetMaxHealth(), 0, false, Dead, Damage, ChangeHealth);
             

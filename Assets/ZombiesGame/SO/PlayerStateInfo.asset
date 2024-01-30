@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStateInfo
   m_EditorClassIdentifier: 
   _initHealth: 100
+  _healInterval: 5
   _moveSpeed: 5
   _runSpeed: 10
   _stamina: 100
