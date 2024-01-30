@@ -13,6 +13,7 @@ namespace Zombies.Gun
         [SerializeField] private float _damage;
         [SerializeField] private float _fireRate;
         [SerializeField] private float _reloadTime;
+        [SerializeField] private float _ammoSpeed;
         [SerializeField] private bool _isFullAuto;
 
         public string GunName => _gunName;
@@ -21,6 +22,7 @@ namespace Zombies.Gun
         public float Damage => _damage;
         public float FireRate => _fireRate;
         public float ReloadTime => _reloadTime;
+        public float AmmoSpeed => _ammoSpeed;
         public bool IsFullAuto => _isFullAuto;
     }
 }

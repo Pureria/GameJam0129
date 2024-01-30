@@ -43,7 +43,7 @@ namespace Zombies.Gun
             _currentMagazine--;
             GameObject ammo = Instantiate(_ammoPrefab, _muzzle.position, Quaternion.identity);
             Ammo ammoScript = ammo.GetComponent<Ammo>();
-            ammoScript.SetParam(to, 10, _gunInfo.Damage, pCore);
+            ammoScript.SetParam(to, _gunInfo.AmmoSpeed, _gunInfo.Damage, pCore);
         }
 
         public void StartReload()
