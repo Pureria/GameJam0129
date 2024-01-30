@@ -10,6 +10,7 @@ namespace Zombies.Gun
         [SerializeField] private GunInfoSO _gunInfo;
         [SerializeField] private Transform _muzzle;
         [SerializeField] private GameObject _ammoPrefab;
+        [SerializeField] private GunEventSO _gunEventSO;
         
         /*マガジン内の弾*/ private int _currentMagazine;
         /*残りの弾*/ private int _currentAmmo;
@@ -20,13 +21,18 @@ namespace Zombies.Gun
         public bool GetIsFullAuto() => _gunInfo.IsFullAuto;
         public int GetCurrentMagazine() => _currentMagazine;
         public int GetCurrentAmmo() => _currentAmmo;
-
+        public GunInfoSO GetGunInfo() => _gunInfo;
+        
         private void Update()
         {
             if (_isReload && _reloadStartTime + _gunInfo.ReloadTime <= Time.time)
             {
                 _isReload = false;
                 Reload();
+            }
+            else if(_isReload)
+            {
+                _gunEventSO.OnReloadingEnvent?.Invoke((Time.time - _reloadStartTime) / _gunInfo.ReloadTime);
             }
         }
 
@@ -44,6 +50,7 @@ namespace Zombies.Gun
             GameObject ammo = Instantiate(_ammoPrefab, _muzzle.position, Quaternion.identity);
             Ammo ammoScript = ammo.GetComponent<Ammo>();
             ammoScript.SetParam(to, _gunInfo.AmmoSpeed, _gunInfo.Damage, pCore);
+            _gunEventSO.OnChangeCurrentMagazineEvent?.Invoke(_currentMagazine);
         }
 
         public void StartReload()
@@ -52,6 +59,13 @@ namespace Zombies.Gun
 
             _isReload = true;
             _reloadStartTime = Time.time;
+            
+            _gunEventSO.OnReloadStartEvent?.Invoke();
+        }
+
+        public void ReloadCancel()
+        {
+            _isReload = false;
         }
 
         private void Reload()
@@ -63,6 +77,10 @@ namespace Zombies.Gun
                 _currentMagazine += _currentAmmo;
                 _currentAmmo = 0;
             }
+            
+            _gunEventSO.OnReloadEndEvent?.Invoke();
+            _gunEventSO.OnChangeCurrentMagazineEvent?.Invoke(_currentMagazine);
+            _gunEventSO.OnChangeCurrentAmmoEvent?.Invoke(_currentAmmo);
         }
 
         public void Initialize()
@@ -71,5 +89,7 @@ namespace Zombies.Gun
             _currentMagazine = _gunInfo.MagazineSize;
             _isReload = false;
         }
+        
+        public GunEventSO GetGunEventSO() => _gunEventSO;
     }
 }

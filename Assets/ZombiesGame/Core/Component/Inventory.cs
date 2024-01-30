@@ -2,16 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zombies.Gun;
 
 namespace Zombies.Core
 {
     public class Inventory : CoreComponent
     {
+        //インベントリに機能持たせすぎ！！
+        
         private List<Gun.Gun> _guns = new List<Gun.Gun>();
         private int _nowMoney;
-        private Transform _gunRootTransform;
-
         private int _nowWeaponIndex;
+        private Transform _gunRootTransform;
+        private InventoryProgressSO _progressSO;
+        
+        private GunEventSO _gunEventSo;
         
         public int Money => _nowMoney;
 
@@ -21,13 +26,28 @@ namespace Zombies.Core
             _nowWeaponIndex = 0;
         }
 
-        public void AddMoney(int amount) => _nowMoney += amount;
+        public void AddMoney(int amount)
+        {
+            _nowMoney += amount;
+            SetProgressData();
+        }
+
+
+        public void UseMoney(int amount)
+        {
+            _nowMoney -= amount;
+            SetProgressData();
+        }
 
         //次の武器へ切り替え
         public void ChangeWeapon()
         {
-            if (_nowWeaponIndex + 1 >= _guns.Count) _nowWeaponIndex = 0;
-            else _nowWeaponIndex++;
+            int index = _nowWeaponIndex;
+            
+            if (index + 1 >= _guns.Count) index = 0;
+            else index++;
+
+            SetActiveGun(index);
         }
         
         public void AddGun(GameObject getGun)
@@ -60,24 +80,28 @@ namespace Zombies.Core
             {
                 Debug.LogError("武器にGunコンポーネントが存在しません。");
             }
+            
+            SetProgressData();
         }
 
         public Gun.Gun GetActiveGun() { return _guns[_nowWeaponIndex]; }
 
         public void SetActiveGun(int index)
         {
+            _guns[_nowWeaponIndex].ReloadCancel();
+            
             //valueが_gunsの要素数を超えないように
-            if (index > _guns.Count) index = _guns.Count - 1;
-            else if (index < 0) index = 0;
+            if (index > _guns.Count) index = 0;
+            else if (index < 0) index = _guns.Count - 1;
                 
             _nowWeaponIndex = index;
             ChangeWeapon(_nowWeaponIndex);
         }
 
-        public void Initialize(int initMoney, GameObject initGun, Transform gunRootTran)
+        public void Initialize(int initMoney, GameObject initGun, Transform gunRootTran, InventoryProgressSO progressSO)
         {
+            _progressSO = progressSO;
             _gunRootTransform = gunRootTran;
-            AddMoney(initMoney);
             _guns.Clear();
             
             GameObject gun = Instantiate(initGun, _gunRootTransform);
@@ -88,6 +112,14 @@ namespace Zombies.Core
                 gunScript.Initialize();
                 SetActiveGun(0);
             }
+            
+            AddMoney(initMoney);
+            _gunEventSo = _guns[_nowWeaponIndex].GetGunEventSO();
+            _gunEventSo.OnReloadStartEvent += ActiveGunReloadStart;
+            _gunEventSo.OnReloadingEnvent += ActiveGunReloading;
+            _gunEventSo.OnReloadEndEvent += ActiveGunReloadEnd;
+            _gunEventSo.OnChangeCurrentMagazineEvent += ChangeCurrentMagazine;
+            _gunEventSo.OnChangeCurrentAmmoEvent += ChangeCurrentAmmo;
         }
         
         private void AllWeaponHide()
@@ -102,6 +134,53 @@ namespace Zombies.Core
         {
             AllWeaponHide();
             _guns[index].gameObject.SetActive(true);
+            
+            SetProgressData();
+        }
+
+        private void SetProgressData()
+        {
+            _progressSO.NowMoney = _nowMoney;
+            
+            _progressSO.NowGunName = _guns[_nowWeaponIndex].GetGunInfo().GunName;
+            _progressSO.CurrentMagazine = _guns[_nowWeaponIndex].GetCurrentMagazine();
+            _progressSO.CurrentAmmo = _guns[_nowWeaponIndex].GetCurrentAmmo();
+        }
+
+        private void OnDisable()
+        {
+            _gunEventSo.OnReloadStartEvent -= ActiveGunReloadStart;
+            _gunEventSo.OnReloadingEnvent -= ActiveGunReloading;
+            _gunEventSo.OnReloadEndEvent -= ActiveGunReloadEnd;
+            _gunEventSo.OnChangeCurrentMagazineEvent -= ChangeCurrentMagazine;
+            _gunEventSo.OnChangeCurrentAmmoEvent -= ChangeCurrentAmmo;
+        }
+
+        private void ActiveGunReloadStart()
+        {
+            _progressSO.NowReload = true;
+            _progressSO.ReloadProgress = 0;
+        }
+        
+        private void ActiveGunReloadEnd()
+        {
+            _progressSO.NowReload = false;
+            SetProgressData();
+        }
+        
+        private void ActiveGunReloading(float progress)
+        {
+            _progressSO.ReloadProgress = progress;
+        }
+        
+        private void ChangeCurrentMagazine(int currentMagazine)
+        {
+            _progressSO.CurrentMagazine = currentMagazine;
+        }
+
+        private void ChangeCurrentAmmo(int currentAmmo)
+        {
+            _progressSO.CurrentAmmo = currentAmmo;
         }
     }
 }

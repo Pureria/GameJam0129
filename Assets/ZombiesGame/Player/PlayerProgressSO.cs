@@ -9,8 +9,5 @@ namespace Zombies.Player
     {
         public float Health = 0;
         public float Stamina = 0;
-        public float NowMoney = 0;
-        public int CurrentMagazine = 0;
-        public int CurrentAmmo = 0;
     }
 }
