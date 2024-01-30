@@ -17,6 +17,9 @@ namespace Zombies.Gun
         private float _shotTime;
         private float _reloadStartTime;
 
+        public bool GetIsFullAuto() => _gunInfo.IsFullAuto;
+        public int GetCurrentMagazine() => _currentMagazine;
+
         private void Update()
         {
             if (_isReload && _reloadStartTime + _gunInfo.ReloadTime <= Time.time)

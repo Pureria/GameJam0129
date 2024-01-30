@@ -33,6 +33,11 @@ namespace Zombies.Player.State
                 //_inputSO.UseInteractInput();
                 _stateEvent.InteractEvent?.Invoke();
             }
+
+            if (_inputSO.InteractInput)
+            {
+                _stateEvent.InteractEvent?.Invoke();
+            }
         }
 
         public override void FixedUpdate()

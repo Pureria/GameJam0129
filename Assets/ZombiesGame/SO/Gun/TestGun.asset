@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TestGun
   m_EditorClassIdentifier: 
   _gunName: 
-  _magazineSize: 0
-  _maxAmmo: 0
-  _damage: 0
-  _fireRate: 0
-  _reloadTime: 0
+  _magazineSize: 7
+  _maxAmmo: 49
+  _damage: 30
+  _fireRate: 1
+  _reloadTime: 3
   _isFullAuto: 0

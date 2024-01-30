@@ -69,12 +69,14 @@ namespace Zombies.Player
         {
             _stateEventSO.MoveEvent += Move;
             _stateEventSO.InteractEvent += Interact;
+            _stateEventSO.ShotEvent += Shot;
         }
 
         private void OnDisable()
         {
             _stateEventSO.MoveEvent -= Move;
             _stateEventSO.InteractEvent -= Interact;
+            _stateEventSO.ShotEvent -= Shot;
         }
 
         private void Update()
@@ -102,9 +104,7 @@ namespace Zombies.Player
 
             if (EditorApplication.isPlaying)
             {
-                Vector3 lookPos = _inputSO.ViewPoint;
-                lookPos.z = 1;
-                lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+                Vector3 lookPos = GetMouseToWorldPoint();
                 
                 //DrawLineでposからlookPosの方向に線を引く、この時、線の長さは必ずInteractDistanceになる
                 Gizmos.DrawLine((Vector2)pos, (Vector2)pos + ((Vector2)lookPos - (Vector2)pos).normalized * _stateInfo.InteractDistance);
@@ -129,9 +129,7 @@ namespace Zombies.Player
         private void Interact()
         {
             Vector2 pos = transform.position;
-            Vector3 lookPos = _inputSO.ViewPoint;
-            lookPos.z = 1;
-            lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+            Vector3 lookPos = GetMouseToWorldPoint();
             
             _interact.FindInteract(_core, pos, (Vector2)lookPos.normalized, _stateInfo.InteractDistance,
                 _interactLayer);
@@ -140,9 +138,7 @@ namespace Zombies.Player
         private void CheckRotation()
         {
             Vector2 pos = transform.position;
-            Vector3 lookPos = _inputSO.ViewPoint;
-            lookPos.z = 1;
-            lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+            Vector3 lookPos = GetMouseToWorldPoint();
             
             if (_isRight)
             {
@@ -164,19 +160,25 @@ namespace Zombies.Player
             _anim.SetBool("isPlayerRight", _isRight);
         }
 
-        private void ChangeHealth()
+        private void ChangeHealth() { Debug.Log($"{transform.name} : ChangeHealth: ${_states.Health}"); }
+
+        private void Damage() { Debug.Log($"{transform.name} : Damage"); }
+
+        private void Dead() { Debug.Log($"{transform.name} : Dead"); }
+
+        private void Shot()
         {
-            Debug.Log($"{transform.name} : ChangeHealth: ${_states.Health}");
+            Gun.Gun gunScript = _inventory.GetActiveGun();
+            gunScript.Shot(GetMouseToWorldPoint() - transform.position, _core);
+            if (!gunScript.GetIsFullAuto() || gunScript.GetCurrentMagazine() <= 0) _inputSO.UseShotInput();
         }
 
-        private void Damage()
+        private Vector3 GetMouseToWorldPoint()
         {
-            Debug.Log($"{transform.name} : Damage");
-        }
-
-        private void Dead()
-        {
-            Debug.Log($"{transform.name} : Dead");
+            Vector3 lookPos = _inputSO.ViewPoint;
+            lookPos.z = 1;
+            lookPos = Camera.main.ScreenToWorldPoint(lookPos);
+            return lookPos;
         }
         
         private void ChangeState()
