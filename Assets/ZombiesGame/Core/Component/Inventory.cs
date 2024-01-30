@@ -101,6 +101,7 @@ namespace Zombies.Core
         public void Initialize(int initMoney, GameObject initGun, Transform gunRootTran, InventoryProgressSO progressSO)
         {
             _progressSO = progressSO;
+            _progressSO.ResetProgressData();
             _gunRootTransform = gunRootTran;
             _guns.Clear();
             

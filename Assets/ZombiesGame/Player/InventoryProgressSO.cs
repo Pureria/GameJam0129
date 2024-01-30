@@ -16,5 +16,15 @@ namespace Zombies
         public bool NowReload = false;
         //0~1
         public float ReloadProgress = 0;
+        
+        public void ResetProgressData()
+        {
+            NowMoney = 0;
+            NowGunName = "";
+            CurrentMagazine = 0;
+            CurrentAmmo = 0;
+            NowReload = false;
+            ReloadProgress = 0;
+        }
     }
 }
