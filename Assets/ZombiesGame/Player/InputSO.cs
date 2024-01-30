@@ -12,9 +12,11 @@ namespace Zombies.Input
         public bool InteractInput;
         public bool ShotInput;
         public bool ReloadInput;
+        public bool ChangeNextWeaponInput;
         
         public void UseShotInput() => ShotInput = false;
         public void UseReloadInput() => ReloadInput = false;
         public void UseInteractInput() => InteractInput = false;
+        public void UseChangeNextWeaponInput() => ChangeNextWeaponInput = false;
     }
 }

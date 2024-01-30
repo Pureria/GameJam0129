@@ -58,5 +58,17 @@ namespace Zombies.Input
                 _inputSO.ReloadInput = false;
             }
         }
+
+        public void OnChangeNextWeapon(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                _inputSO.ChangeNextWeaponInput = true;
+            }
+            else if (context.canceled)
+            {
+                _inputSO.ChangeNextWeaponInput = false;
+            }
+        }
     }
 }

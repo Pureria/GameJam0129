@@ -9,7 +9,9 @@ namespace Zombies
     {
         [Header("お金")]
         public float NowMoney = 0;
-        [Header("銃関連")]
+        [Header("現在取得している銃の情報")]
+        public List<string> GunList = new List<string>();
+        [Header("現在アクティブな銃情報")]
         public string NowGunName = "";
         public int CurrentMagazine = 0;
         public int CurrentAmmo = 0;
@@ -19,6 +21,7 @@ namespace Zombies
         
         public void ResetProgressData()
         {
+            GunList.Clear();
             NowMoney = 0;
             NowGunName = "";
             CurrentMagazine = 0;

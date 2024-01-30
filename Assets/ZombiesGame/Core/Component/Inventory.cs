@@ -40,7 +40,7 @@ namespace Zombies.Core
         }
 
         //次の武器へ切り替え
-        public void ChangeWeapon()
+        public void ChangeNextWeapon()
         {
             int index = _nowWeaponIndex;
             
@@ -146,6 +146,12 @@ namespace Zombies.Core
             _progressSO.NowGunName = _guns[_nowWeaponIndex].GetGunInfo().GunName;
             _progressSO.CurrentMagazine = _guns[_nowWeaponIndex].GetCurrentMagazine();
             _progressSO.CurrentAmmo = _guns[_nowWeaponIndex].GetCurrentAmmo();
+            
+            _progressSO.GunList.Clear();
+            foreach (Gun.Gun gun in _guns)
+            {
+                _progressSO.GunList.Add(gun.GetGunInfo().GunName);
+            }
         }
 
         private void OnDisable()

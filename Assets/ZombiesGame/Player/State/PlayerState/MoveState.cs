@@ -41,8 +41,12 @@ namespace Zombies.Player.State
             
             if (_inputSO.ReloadInput)
             {
-                _inputSO.UseReloadInput();
                 _stateEvent.ReloadEvent?.Invoke();
+            }
+
+            if (_inputSO.ChangeNextWeaponInput)
+            {
+                _stateEvent.ChangeWeaponEvent?.Invoke();
             }
         }
 

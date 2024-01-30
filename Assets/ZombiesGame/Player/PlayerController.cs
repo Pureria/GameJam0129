@@ -76,6 +76,7 @@ namespace Zombies.Player
             _stateEventSO.InteractEvent += Interact;
             _stateEventSO.ShotEvent += Shot;
             _stateEventSO.ReloadEvent += Reload;
+            _stateEventSO.ChangeWeaponEvent += ChangeWeapon;
         }
 
         private void OnDisable()
@@ -84,6 +85,7 @@ namespace Zombies.Player
             _stateEventSO.InteractEvent -= Interact;
             _stateEventSO.ShotEvent -= Shot;
             _stateEventSO.ReloadEvent -= Reload;
+            _stateEventSO.ChangeWeaponEvent -= ChangeWeapon;
         }
 
         private void Update()
@@ -189,8 +191,15 @@ namespace Zombies.Player
 
         private void Reload()
         {
+            _inputSO.UseReloadInput();
             Gun.Gun gunScript = _inventory.GetActiveGun();
             gunScript.StartReload();
+        }
+
+        private void ChangeWeapon()
+        {
+            _inputSO.UseChangeNextWeaponInput();
+            _inventory.ChangeNextWeapon();
         }
 
         private Vector3 GetMouseToWorldPoint()
