@@ -98,6 +98,13 @@ namespace Zombies.Player
             
             CheckRotation();
             _progressSO.NowMoney = _inventory.Money;
+            
+            //_gunRootTranをマウスの方向に向ける
+            Vector3 lookPos = GetMouseToWorldPoint();
+            Vector3 gunPos = _gunRootTran.position;
+            Vector3 gunLookPos = lookPos - gunPos;
+            float angle = Mathf.Atan2(gunLookPos.y, gunLookPos.x) * Mathf.Rad2Deg;
+            _gunRootTran.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
         private void FixedUpdate()

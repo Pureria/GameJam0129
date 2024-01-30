@@ -71,7 +71,7 @@ AnimatorStateMachine:
     m_Position: {x: 90, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5481659121956903309}
-    m_Position: {x: 125, y: 285, z: 0}
+    m_Position: {x: 90, y: 290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -98,6 +98,18 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: move
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isRightInput
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isPlayerRight
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
