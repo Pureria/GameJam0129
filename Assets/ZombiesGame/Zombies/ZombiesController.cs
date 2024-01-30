@@ -37,17 +37,20 @@ namespace Zombies.Zombie
 
         private Zombie_IdleState _idleState;
         private Zombie_MoveState _moveState;
+        private Zombie_AttackState _attackState;
 
         private void OnEnable()
         {
             _stateEventSO.SetCanMoveEvent += SetCanMove;
             _stateEventSO.MoveEvent += Move;
+            _stateEventSO.CheckAttackEvent += CheckAnyTarget;
         }
 
         private void OnDisable()
         {
             _stateEventSO.SetCanMoveEvent -= SetCanMove;
             _stateEventSO.MoveEvent -= Move;
+            _stateEventSO.CheckAttackEvent -= CheckAnyTarget;
         }
 
         private void Start()
@@ -67,6 +70,7 @@ namespace Zombies.Zombie
             
             _idleState = new Zombie_IdleState(_anim, "idle", _infoSo, _stateEventSO);
             _moveState = new Zombie_MoveState(_anim, "move", _infoSo, _stateEventSO);
+            _attackState = new Zombie_AttackState(_anim, "attack", _infoSo, _stateEventSO);
             _stateMachine = new StateMachine(_idleState);
 
             _isBarricade = true;
@@ -75,11 +79,6 @@ namespace Zombies.Zombie
         private void Update()
         {
             _stateMachine.LogicUpdate();
-            
-            if(_isBarricade)
-                CheckBaricade();
-            else
-                CheckTarget();
 
             if (_stateMachine.CurrentState.EndState)
             {
@@ -98,6 +97,14 @@ namespace Zombies.Zombie
             Gizmos.DrawWireSphere(transform.position, _infoSo.AttackDistance);
         }
 
+        private void CheckAnyTarget()
+        {
+            if(_isBarricade)
+                CheckBaricade();
+            else
+                CheckTarget();
+        }
+
         /// <summary>
         /// 攻撃可能範囲に攻撃可能なものがあるか確認
         /// </summary>
@@ -114,10 +121,9 @@ namespace Zombies.Zombie
                 if(tDamage == null) continue;
 
                 //ダメージステータスに遷移
+                _stateMachine.ChangeState(_attackState);
                 //canMoveをfalseにする
                 //ダメージステータスを抜けたらTrueにする
-                //_stateMachine.ChangeState(_damageState);
-                //SetCanMove(false);
                 tDamage.IsDamage(_infoSo.DamageAmount);
                 return;
             }
@@ -148,6 +154,7 @@ namespace Zombies.Zombie
                     Core.Damage tDamage = tcore.GetCoreComponent<Core.Damage>();
                     if(tDamage == null) continue;
 
+                    _stateMachine.ChangeState(_attackState);
                     tDamage.IsDamage(_infoSo.DamageAmount);
                     return;
                 }
@@ -163,6 +170,10 @@ namespace Zombies.Zombie
                     break;
                 
                 case Zombie_MoveState:
+                    break;
+                
+                case Zombie_AttackState:
+                    _stateMachine.ChangeState(_idleState);
                     break;
                 
                 default:
@@ -186,6 +197,11 @@ namespace Zombies.Zombie
         public void Setup(Transform target)
         {
             SetTarget(target);
+        }
+
+        public void AnimationFinishTrigger()
+        {
+            _stateMachine.CurrentState.AnimationFinishTrigger();
         }
     }
 }
