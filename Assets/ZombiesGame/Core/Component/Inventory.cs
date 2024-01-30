@@ -11,19 +11,8 @@ namespace Zombies.Core
         private int _nowMoney;
         private Transform _gunRootTransform;
 
-        private int _nowWeaponIndex
-        {
-            get => _nowWeaponIndex;
-            set
-            {
-                //valueが_gunsの要素数を超えないように
-                if (value >= _guns.Count) value = _guns.Count - 1;
-                else if (value < 0) value = 0;
-                
-                _nowWeaponIndex = value;
-                ChangeWeapon(value);
-            }
-        }
+        private int _nowWeaponIndex;
+        
         public int Money => _nowMoney;
 
         private void Start()
@@ -50,7 +39,7 @@ namespace Zombies.Core
                 gunScript.Initialize();
 
                 //ミュールキックは実装する予定なし！！
-                if (_guns.Count <= 2)
+                if (_guns.Count >= 2)
                 {
                     //武器が2つ存在する場合は現在装備している武器を新しい武器に切り替える
                     GameObject delGunObj = _guns[_nowWeaponIndex].gameObject;
@@ -63,7 +52,7 @@ namespace Zombies.Core
                     //追加したうえでその武器に切り替える
                     _guns.Add(gunScript);
                     gunScript.Initialize();
-                    _nowWeaponIndex += 1;
+                    SetActiveGun(_nowWeaponIndex + 1);
                 }
                 
             }
@@ -74,13 +63,31 @@ namespace Zombies.Core
         }
 
         public Gun.Gun GetActiveGun() { return _guns[_nowWeaponIndex]; }
-        public void SetActiveGun(int index) { _nowWeaponIndex = index; }
+
+        public void SetActiveGun(int index)
+        {
+            //valueが_gunsの要素数を超えないように
+            if (index > _guns.Count) index = _guns.Count - 1;
+            else if (index < 0) index = 0;
+                
+            _nowWeaponIndex = index;
+            ChangeWeapon(_nowWeaponIndex);
+        }
 
         public void Initialize(int initMoney, GameObject initGun, Transform gunRootTran)
         {
-            AddMoney(initMoney);
-            AddGun(initGun);
             _gunRootTransform = gunRootTran;
+            AddMoney(initMoney);
+            _guns.Clear();
+            
+            GameObject gun = Instantiate(initGun, _gunRootTransform);
+            gun.transform.parent = _gunRootTransform;
+            if (gun.TryGetComponent<Gun.Gun>(out Gun.Gun gunScript))
+            {
+                _guns.Add(gunScript);
+                gunScript.Initialize();
+                SetActiveGun(0);
+            }
         }
         
         private void AllWeaponHide()
