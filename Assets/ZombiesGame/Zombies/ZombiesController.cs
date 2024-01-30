@@ -48,9 +48,6 @@ namespace Zombies.Zombie
 
         private void Start()
         {
-            //仮Health
-            float hogeHealth = 100;
-            
             _core = GetComponentInChildren<Core.Core>();
             if (_core == null)
             {
@@ -59,7 +56,7 @@ namespace Zombies.Zombie
             }
 
             _states = _core.GetCoreComponent<States>();
-            _states.Initialize(hogeHealth, 0, false, Dead, Damage, ChangeHealth);
+            _states.Initialize(ZombieManager.Instance.GetMaxHealth(), 0, false, Dead, Damage, ChangeHealth);
             
             _agent.SetCanMove(true);
             _agent.SetSpeed(_infoSo.WalkSpeed);
