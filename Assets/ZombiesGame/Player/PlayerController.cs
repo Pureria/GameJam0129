@@ -31,6 +31,7 @@ namespace Zombies.Player
         private Core.Core _core;
         private Movement _movement;
         private Interact _interact;
+        private States _states;
 
         private StateMachine _stateMachine;
 
@@ -48,6 +49,9 @@ namespace Zombies.Player
 
             _movement = _core.GetCoreComponent<Movement>();
             _interact = _core.GetCoreComponent<Interact>();
+            _states = _core.GetCoreComponent<States>();
+
+            _states.Initialize(_stateInfo.InitHealth, _stateInfo.HealInterval, true, Dead, Damage, ChangeHealth);
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
@@ -155,6 +159,21 @@ namespace Zombies.Player
             _isRight = !_isRight;
 
             _anim.SetBool("isPlayerRight", _isRight);
+        }
+
+        private void ChangeHealth()
+        {
+            Debug.Log($"{transform.name} : ChangeHealth");
+        }
+
+        private void Damage()
+        {
+            Debug.Log($"{transform.name} : Damage");
+        }
+
+        private void Dead()
+        {
+            Debug.Log($"{transform.name} : Dead");
         }
         
         private void ChangeState()

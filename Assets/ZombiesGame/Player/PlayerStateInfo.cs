@@ -9,6 +9,7 @@ namespace Zombies.Player
     public class PlayerStateInfo : ScriptableObject
     {
         [SerializeField] private float _initHealth;
+        [SerializeField] private float _healInterval = 2.0f;
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _runSpeed;
         [SerializeField] private float _stamina;
@@ -19,5 +20,6 @@ namespace Zombies.Player
         public float RunSpeed => _runSpeed;
         public float Stamina => _stamina;
         public float InteractDistance => _interactDistance;
+        public float HealInterval => _healInterval;
     }
 }
