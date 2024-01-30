@@ -14,6 +14,7 @@ namespace Zombies.Player
         [SerializeField] private float _runSpeed;
         [SerializeField] private float _stamina;
         [SerializeField] private float _interactDistance;
+        [SerializeField] private int _initMoney = 500;
 
         public float InitHealth => _initHealth;
         public float MoveSpeed => _moveSpeed;
@@ -21,5 +22,6 @@ namespace Zombies.Player
         public float Stamina => _stamina;
         public float InteractDistance => _interactDistance;
         public float HealInterval => _healInterval;
+        public int InitMoney => _initMoney;
     }
 }

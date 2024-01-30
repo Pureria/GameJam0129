@@ -32,6 +32,7 @@ namespace Zombies.Player
         private Movement _movement;
         private Interact _interact;
         private States _states;
+        private Inventory _inventory;
 
         private StateMachine _stateMachine;
 
@@ -50,8 +51,10 @@ namespace Zombies.Player
             _movement = _core.GetCoreComponent<Movement>();
             _interact = _core.GetCoreComponent<Interact>();
             _states = _core.GetCoreComponent<States>();
+            _inventory = _core.GetCoreComponent<Inventory>();
 
             _states.Initialize(_stateInfo.InitHealth, _stateInfo.HealInterval, true, Dead, Damage, ChangeHealth);
+            _inventory.AddMoney(_stateInfo.InitMoney);
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
