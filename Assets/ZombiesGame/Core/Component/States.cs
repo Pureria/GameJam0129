@@ -17,8 +17,11 @@ namespace Zombies.Core
         private bool _isAutoHeal;
         private bool _isHealthMax;
         private bool _isDamageOne;
+        private bool _isDead;
+        private bool _isInvisible;
 
         public float Health => _health;
+        public bool IsDead => _isDead;
 
         public void Initialize(float maxHealth, float healInterval, bool isAutoHeal, Action deadEvent, Action damageEvent, Action changeHealthEvent)
         {
@@ -33,10 +36,13 @@ namespace Zombies.Core
             _isHealthMax = true;
             _damageTime = 0;
             _isDamageOne = false;
+            _isDead = false;
+            _isInvisible = false;
         }
 
         public void Damage(float damage)
         {
+            if (_isInvisible) return;
             if (_isDamageOne) damage = 1;
             
             _damageTime = Time.time;
@@ -49,11 +55,14 @@ namespace Zombies.Core
             {
                 _health = 0;
                 _deadEvent?.Invoke();
+                _isDead = true;
+                _isInvisible = true;
             }
         }
 
         public void Heal(float heal)
         {
+            _isDead = false;
             _health += heal;
             _changeHealthEvent?.Invoke();
             if (_health > _maxHealth)
@@ -79,5 +88,7 @@ namespace Zombies.Core
         {
             _isDamageOne = isDamageOne;
         }
+
+        public void SetInvisible(bool invisible) => _isInvisible = invisible;
     }
 }

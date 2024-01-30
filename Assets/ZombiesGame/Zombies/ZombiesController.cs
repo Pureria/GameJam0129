@@ -128,7 +128,7 @@ namespace Zombies.Zombie
                 _stateMachine.ChangeState(_attackState);
                 //canMoveをfalseにする
                 //ダメージステータスを抜けたらTrueにする
-                tDamage.IsDamage(_infoSo.DamageAmount);
+                tDamage.IsDamage(_infoSo.DamageAmount, _core);
                 return;
             }
         }
@@ -159,7 +159,7 @@ namespace Zombies.Zombie
                     if(tDamage == null) continue;
 
                     _stateMachine.ChangeState(_attackState);
-                    tDamage.IsDamage(_infoSo.DamageAmount);
+                    tDamage.IsDamage(_infoSo.DamageAmount, _core);
                     return;
                 }
             }
@@ -190,6 +190,16 @@ namespace Zombies.Zombie
             if (_targetTran == null) return;
 
             _agent.SetDestination(_targetTran.position);
+        }
+
+        //攻撃された際の処理
+        private void Damage(Core.Core tCore)
+        {
+            Inventory tInventory = tCore.GetCoreComponent<Inventory>();
+            if (tInventory == null) return;
+
+            if (_states.IsDead) tInventory.AddMoney(_infoSo.KillMoney);
+            else tInventory.AddMoney(_infoSo.HitMoney);
         }
         
         private void SetCanMove(bool canMove) => _agent.SetCanMove(canMove);
