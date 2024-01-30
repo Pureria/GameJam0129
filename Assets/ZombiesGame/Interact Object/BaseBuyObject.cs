@@ -22,11 +22,11 @@ namespace Zombies.InteractObject
 
         protected virtual void CheckCanBuy(Core.Core tCore)
         {
-            Core.Inventory tInventory = tCore.GetCoreComponent<Core.Inventory>();
-            if (tInventory == null) return;
+            if(!tCore.GetCoreComponentBool(out Inventory tInventory)) return;
             
             if (tInventory.Money >= _buyObjectInfoSO.Price)
             {
+                tInventory.UseMoney(_buyObjectInfoSO.Price);
                 Buy(tCore);
             }
         }
