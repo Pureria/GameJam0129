@@ -163,7 +163,7 @@ namespace Zombies.Player
 
         private void ChangeHealth()
         {
-            Debug.Log($"{transform.name} : ChangeHealth");
+            Debug.Log($"{transform.name} : ChangeHealth: ${_states.Health}");
         }
 
         private void Damage()
