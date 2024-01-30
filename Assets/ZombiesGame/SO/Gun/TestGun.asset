@@ -18,4 +18,5 @@ MonoBehaviour:
   _damage: 30
   _fireRate: 0.3
   _reloadTime: 3
+  _ammoSpeed: 30
   _isFullAuto: 0

@@ -32,12 +32,14 @@ namespace Zombies.Zombie
 
         private Core.Core _core;
         private Core.States _states;
+        private Core.Damage _damage;
 
         private StateMachine _stateMachine;
 
         private Zombie_IdleState _idleState;
         private Zombie_MoveState _moveState;
         private Zombie_AttackState _attackState;
+        private Zombie_DeadState _deadState;
 
         private void Awake()
         {
@@ -56,6 +58,7 @@ namespace Zombies.Zombie
             _stateEventSO.SetCanMoveEvent -= SetCanMove;
             _stateEventSO.MoveEvent -= Move;
             _stateEventSO.CheckAttackEvent -= CheckAnyTarget;
+            _damage._damageEvent -= Damage;
         }
 
         private void Start()
@@ -67,7 +70,10 @@ namespace Zombies.Zombie
                 return;
             }
             _states = _core.GetCoreComponent<States>();
+            _damage = _core.GetCoreComponent<Damage>();
             _states.Initialize(ZombieManager.Instance.GetMaxHealth(), 0, false, Dead, Damage, ChangeHealth);
+            
+            _damage._damageEvent += Damage;
             
             _agent.SetCanMove(true);
             _agent.SetSpeed(_infoSo.WalkSpeed);
@@ -75,6 +81,7 @@ namespace Zombies.Zombie
             _idleState = new Zombie_IdleState(_anim, "idle", _infoSo, _stateEventSO);
             _moveState = new Zombie_MoveState(_anim, "move", _infoSo, _stateEventSO);
             _attackState = new Zombie_AttackState(_anim, "attack", _infoSo, _stateEventSO);
+            _deadState = new Zombie_DeadState(_anim, "dead", _infoSo, _stateEventSO);
             _stateMachine = new StateMachine(_idleState);
 
             _isBarricade = true;
@@ -180,6 +187,10 @@ namespace Zombies.Zombie
                     _stateMachine.ChangeState(_idleState);
                     break;
                 
+                case Zombie_DeadState:
+                    Destroy(this.gameObject);
+                    break;
+                
                 default:
                     break;
             }
@@ -206,7 +217,7 @@ namespace Zombies.Zombie
         private void SetTarget(Transform tran) => _targetTran = tran;
         private void ChangeHealth(){}
         private void Damage(){ Debug.Log(($"{transform.name} :ダメージ"));}
-        private void Dead(){ Debug.Log(($"{transform.name} :死亡"));}
+        private void Dead(){ _stateMachine.ChangeState(_deadState); }
 
         public void Setup(Transform target)
         {
