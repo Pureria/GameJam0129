@@ -8,9 +8,9 @@ namespace Zombies.InteractObject
 {
     public class BaseBuyObject : MonoBehaviour
     {
-        [SerializeField] private BuyObjectInfoSO _buyObjectInfoSO;
-        private Core.Core _core;
-        private Interact _interact;
+        [SerializeField] protected BuyObjectInfoSO _buyObjectInfoSO;
+        protected Core.Core _core;
+        protected Interact _interact;
 
         protected virtual void Start()
         {
@@ -18,6 +18,11 @@ namespace Zombies.InteractObject
             _interact = _core.GetCoreComponent<Core.Interact>();
 
             _interact.InteractEvent += CheckCanBuy;
+        }
+
+        private void OnDisable()
+        {
+            _interact.InteractEvent -= CheckCanBuy;
         }
 
         protected virtual void CheckCanBuy(Core.Core tCore)

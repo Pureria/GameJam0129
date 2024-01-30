@@ -11843,7 +11843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!208 &1696184366
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -11945,7 +11945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1728024922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12255,7 +12255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786728493232361681, guid: b277d16440ee9d846a093d6310655014, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b277d16440ee9d846a093d6310655014, type: 3}
@@ -12499,6 +12499,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67e690cc7c4331e4ea563ca160bf891a, type: 3}
+--- !u!1001 &2566680537669105327
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559064, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559069, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: m_Name
+      value: Door
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
 --- !u!1001 &4557553143132433526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12553,6 +12610,10 @@ PrefabInstance:
     - target: {fileID: 8786728493232361681, guid: b277d16440ee9d846a093d6310655014, type: 3}
       propertyPath: m_Name
       value: Barricade
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786728493232361681, guid: b277d16440ee9d846a093d6310655014, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b277d16440ee9d846a093d6310655014, type: 3}

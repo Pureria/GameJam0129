@@ -62,7 +62,7 @@ namespace Zombies.Core
 
         public bool GetCoreComponentBool<T>(out T comp) where T : CoreComponent
         {
-            comp = GetComponent<T>();
+            comp = GetCoreComponent<T>();
             if(comp == null) return false;
             return true;
         }
