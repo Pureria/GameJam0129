@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BuyTestGun2InfoSO
   m_EditorClassIdentifier: 
   _name: TestGun2
-  _priva: 1250
+  _priva: 750

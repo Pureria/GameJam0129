@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c18189ed408cac4d82e578bb766bc61, type: 3}
   m_Name: TestGun 2
   m_EditorClassIdentifier: 
-  _gunName: TestGun
+  _gunName: TestGun2
   _magazineSize: 30
   _maxAmmo: 210
   _damage: 50
