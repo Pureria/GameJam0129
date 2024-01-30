@@ -18,6 +18,7 @@ namespace Zombies.Player
         [SerializeField] private PlayerStateInfo _stateInfo;
         [SerializeField] private LayerMask _interactLayer;
         [SerializeField] private Transform _gunRootTran;
+        [SerializeField] private PlayerProgressSO _progressSO;
         
         [Header("Current Data")]
         [SerializeField] private InputSO _inputSO;
@@ -63,6 +64,11 @@ namespace Zombies.Player
             
             if(_stateMachine == null) Debug.LogError("StateMachineが存在しません。");
             _isRight = true;
+
+            _progressSO.Health = _states.Health;
+            _progressSO.CurrentAmmo = _inventory.GetActiveGun().GetCurrentAmmo();
+            _progressSO.CurrentMagazine = _inventory.GetActiveGun().GetCurrentMagazine();
+            _progressSO.NowMoney = _inventory.Money;
         }
         
         private void OnEnable()
@@ -89,6 +95,7 @@ namespace Zombies.Player
             }
             
             CheckRotation();
+            _progressSO.NowMoney = _inventory.Money;
         }
 
         private void FixedUpdate()
@@ -160,7 +167,7 @@ namespace Zombies.Player
             _anim.SetBool("isPlayerRight", _isRight);
         }
 
-        private void ChangeHealth() { Debug.Log($"{transform.name} : ChangeHealth: ${_states.Health}"); }
+        private void ChangeHealth() { _progressSO.Health = _states.Health;; }
 
         private void Damage() { Debug.Log($"{transform.name} : Damage"); }
 
@@ -171,6 +178,8 @@ namespace Zombies.Player
             Gun.Gun gunScript = _inventory.GetActiveGun();
             gunScript.Shot(GetMouseToWorldPoint() - transform.position, _core);
             if (!gunScript.GetIsFullAuto() || gunScript.GetCurrentMagazine() <= 0) _inputSO.UseShotInput();
+            _progressSO.CurrentMagazine = gunScript.GetCurrentMagazine();
+            _progressSO.CurrentAmmo = gunScript.GetCurrentAmmo();
         }
 
         private Vector3 GetMouseToWorldPoint()

@@ -186,7 +186,8 @@ GameObject:
   - component: {fileID: 2308980481796940565}
   - component: {fileID: 2308980481796940561}
   - component: {fileID: 2308980481796940564}
-  m_Layer: 0
+  - component: {fileID: 6617768517484478328}
+  m_Layer: 9
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,10 +265,25 @@ MonoBehaviour:
   _barricadeLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _stateEventSO: {fileID: 11400000, guid: c61510d73dd1cc644860cedb306f3135, type: 2}
   _allZombieInfo: {fileID: 11400000, guid: 8e5f5199fafaa9c4197fb068910f835f, type: 2}
   _agent: {fileID: 2308980481796940561}
   _anim: {fileID: 2308980481796940565}
+--- !u!58 &6617768517484478328
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2308980481796940563}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &2308980482182499738
 GameObject:
   m_ObjectHideFlags: 0

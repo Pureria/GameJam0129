@@ -19,6 +19,7 @@ namespace Zombies.Gun
 
         public bool GetIsFullAuto() => _gunInfo.IsFullAuto;
         public int GetCurrentMagazine() => _currentMagazine;
+        public int GetCurrentAmmo() => _currentAmmo;
 
         private void Update()
         {
@@ -31,7 +32,7 @@ namespace Zombies.Gun
 
         public void Shot(Vector2 to, Core.Core pCore)
         {
-            if (_currentAmmo <= 0 ||
+            if (_currentMagazine <= 0 ||
                 _isReload ||
                 _shotTime + _gunInfo.FireRate > Time.time)
             {
@@ -39,7 +40,7 @@ namespace Zombies.Gun
             }
 
             _shotTime = Time.time;
-            _currentAmmo--;
+            _currentMagazine--;
             GameObject ammo = Instantiate(_ammoPrefab, _muzzle.position, Quaternion.identity);
             Ammo ammoScript = ammo.GetComponent<Ammo>();
             ammoScript.SetParam(to, 10, _gunInfo.Damage, pCore);

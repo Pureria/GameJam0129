@@ -988,6 +988,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _gunRootTran: {fileID: 7634973585152315789}
+  _progressSO: {fileID: 11400000, guid: 9e1fb9d628260ea49813a9dfebe352d2, type: 2}
   _inputSO: {fileID: 11400000, guid: bfb9b5942c0d0ba4b88ba2c7ea09e77c, type: 2}
   _stateEventSO: {fileID: 11400000, guid: e2055cc2f0a27bc4ab25084c065326b7, type: 2}
   _anim: {fileID: 1766833265727197999}

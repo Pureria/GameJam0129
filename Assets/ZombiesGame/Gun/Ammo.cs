@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zombies.Core;
 
 namespace Zombies.Gun
 {
@@ -32,6 +33,7 @@ namespace Zombies.Gun
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            /*
             if (other.gameObject.layer == _zombieLayer)
             {
                 Core.Core zCore = other.GetComponentInChildren<Core.Core>();
@@ -43,6 +45,22 @@ namespace Zombies.Gun
                 damage.IsDamage(_damageAmount, _pCore);
             }
             else if (other.gameObject.layer == _wallLayer)
+            {
+                Destroy(this.gameObject);
+            }
+            */
+            if (_zombieLayer == (_zombieLayer | (1 << other.gameObject.layer)))
+            {
+                Core.Core zCore = other.GetComponentInChildren<Core.Core>();
+                if (zCore == null) return;
+                
+                Core.Damage damage = zCore.GetCoreComponent<Damage>();
+                if (damage == null) return;
+
+                damage.IsDamage(_damageAmount, _pCore);
+                Destroy(this.gameObject);
+            }
+            else if (_wallLayer == (_wallLayer | (1 << other.gameObject.layer)))
             {
                 Destroy(this.gameObject);
             }
