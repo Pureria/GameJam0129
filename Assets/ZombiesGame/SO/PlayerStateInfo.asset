@@ -13,12 +13,8 @@ MonoBehaviour:
   m_Name: PlayerStateInfo
   m_EditorClassIdentifier: 
   _initHealth: 100
-<<<<<<< Updated upstream
   _healInterval: 5
   _moveSpeed: 5
-=======
-  _moveSpeed: 4
->>>>>>> Stashed changes
   _runSpeed: 10
   _stamina: 100
   _interactDistance: 1
