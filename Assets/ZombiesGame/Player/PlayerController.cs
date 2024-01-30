@@ -76,6 +76,7 @@ namespace Zombies.Player
             _stateEventSO.MoveEvent += Move;
             _stateEventSO.InteractEvent += Interact;
             _stateEventSO.ShotEvent += Shot;
+            _stateEventSO.ReloadEvent += Reload;
         }
 
         private void OnDisable()
@@ -83,6 +84,7 @@ namespace Zombies.Player
             _stateEventSO.MoveEvent -= Move;
             _stateEventSO.InteractEvent -= Interact;
             _stateEventSO.ShotEvent -= Shot;
+            _stateEventSO.ReloadEvent -= Reload;
         }
 
         private void Update()
@@ -180,6 +182,12 @@ namespace Zombies.Player
             if (!gunScript.GetIsFullAuto() || gunScript.GetCurrentMagazine() <= 0) _inputSO.UseShotInput();
             _progressSO.CurrentMagazine = gunScript.GetCurrentMagazine();
             _progressSO.CurrentAmmo = gunScript.GetCurrentAmmo();
+        }
+
+        private void Reload()
+        {
+            Gun.Gun gunScript = _inventory.GetActiveGun();
+            gunScript.StartReload();
         }
 
         private Vector3 GetMouseToWorldPoint()

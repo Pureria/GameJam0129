@@ -932,6 +932,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4f8147ef-f051-4c15-845e-587303c79b97
     m_ActionName: Game/Fire
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1766833265727197988}
+        m_TargetAssemblyTypeName: Zombies.Input.InputController, Assembly-CSharp
+        m_MethodName: OnReload
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cbb95bfa-1b6c-4561-859a-b0b200f2a945
+    m_ActionName: Game/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -986,7 +1002,7 @@ MonoBehaviour:
   _stateInfo: {fileID: 11400000, guid: 05e90dacdd259b247a18c1946b9c2e57, type: 2}
   _interactLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   _gunRootTran: {fileID: 7634973585152315789}
   _progressSO: {fileID: 11400000, guid: 9e1fb9d628260ea49813a9dfebe352d2, type: 2}
   _inputSO: {fileID: 11400000, guid: bfb9b5942c0d0ba4b88ba2c7ea09e77c, type: 2}

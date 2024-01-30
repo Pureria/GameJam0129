@@ -12331,10 +12331,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1766833265727197992, guid: be17eb390b6589b40a124c6fb7af23ea, type: 3}
-      propertyPath: _interactLayer.m_Bits
-      value: 1088
-      objectReference: {fileID: 0}
     - target: {fileID: 1766833265727197995, guid: be17eb390b6589b40a124c6fb7af23ea, type: 3}
       propertyPath: m_RootOrder
       value: 3

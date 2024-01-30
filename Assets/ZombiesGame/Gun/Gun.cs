@@ -48,7 +48,7 @@ namespace Zombies.Gun
 
         public void StartReload()
         {
-            if (_isReload || _currentAmmo <= 0) return;
+            if (_isReload || _currentAmmo <= 0 || _currentMagazine ==  _gunInfo.MagazineSize) return;
 
             _isReload = true;
             _reloadStartTime = Time.time;
