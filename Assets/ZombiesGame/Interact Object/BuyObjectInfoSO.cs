@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace  Zombies.InteractObject
 {
@@ -8,9 +9,9 @@ namespace  Zombies.InteractObject
     public class BuyObjectInfoSO : ScriptableObject
     {
         [SerializeField] private string _name = "";
-        [SerializeField] private int _priva = 0;
+        [SerializeField] private int _price = 0;
 
         public string Name => _name;
-        public int Price => _priva;
+        public int Price => _price;
     }
 }

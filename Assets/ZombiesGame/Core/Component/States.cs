@@ -97,6 +97,8 @@ namespace Zombies.Core
             _isJeagerNog = isJeagerNog;
             if (_isJeagerNog) SetHealth(_initMaxHealth * 2);
             else SetHealth(_initMaxHealth);
+            
+            _changeHealthEvent?.Invoke();
         }
 
         public void SetInvisible(bool invisible) => _isInvisible = invisible;
