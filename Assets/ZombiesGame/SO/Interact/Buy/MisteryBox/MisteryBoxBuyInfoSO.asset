@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MisteryBoxBuyInfoSO
   m_EditorClassIdentifier: 
   _name: Mistery Box
-  _priva: 950
+  _price: 950

@@ -141,6 +141,7 @@ namespace Zombies.Core
 
         private void SetProgressData()
         {
+            Debug.Log($"NowMone : {_nowMoney}");
             _progressSO.NowMoney = _nowMoney;
             
             _progressSO.NowGunName = _guns[_nowWeaponIndex].GetGunInfo().GunName;

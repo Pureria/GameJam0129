@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DoorObject
   m_EditorClassIdentifier: 
   _name: Door
-  _priva: 750
+  _price: 750

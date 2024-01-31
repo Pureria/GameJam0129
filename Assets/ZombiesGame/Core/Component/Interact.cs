@@ -8,9 +8,19 @@ namespace Zombies.Core
     public class Interact : CoreComponent
     {
         public Action<Core> InteractEvent;
+        public Action UseInteractEvent;
         
         private bool _canInteract;
+        private bool _canInteractHold;
 
+        public bool CanInteractHold => _canInteractHold;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _canInteractHold = false;
+        }
+        
         private void Start()
         {
             _canInteract = true;
@@ -41,6 +51,8 @@ namespace Zombies.Core
                 if (tInteract == null) continue;
 
                 tInteract.CallInteractEvent(core);
+                
+                if(!tInteract.CanInteractHold) UseInteractEvent?.Invoke();
                 break;
             }
         }
@@ -57,5 +69,6 @@ namespace Zombies.Core
         }
 
         public void SetCanInteract(bool canInteract) => _canInteract = canInteract;
+        public void SetCanHoldInteract(bool canInteractHold) => _canInteractHold = canInteractHold;
     }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BuyTestGunInfo
   m_EditorClassIdentifier: 
   _name: Buy TestGun
-  _priva: 500
+  _price: 500

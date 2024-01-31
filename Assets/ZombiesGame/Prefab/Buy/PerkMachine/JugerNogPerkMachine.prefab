@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 805986790705228782}
   - component: {fileID: 805986790705228783}
   - component: {fileID: 805986790705228780}
+  - component: {fileID: 7170869586220017390}
   m_Layer: 6
   m_Name: JugerNogPerkMachine
   m_TagString: Untagged
@@ -102,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805986790705228781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.31, y: -11.96, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -150,6 +151,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buyObjectInfoSO: {fileID: 11400000, guid: 61bbe26f1433a334a936b7404a4642de, type: 2}
+--- !u!208 &7170869586220017390
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805986790705228781}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.975, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &805986790892439036
 GameObject:
   m_ObjectHideFlags: 0

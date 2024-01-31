@@ -30,6 +30,7 @@ namespace Zombies.Gimmick
             
             _states = _core.GetCoreComponent<Core.States>();
             _interact = _core.GetCoreComponent<Interact>();
+            _interact.SetCanHoldInteract(true);
             _states.Initialize(4, 0, false, Dead, Damage, ChangeHealth);
             _states.SetDamageOne(true);
             _interact.InteractEvent += Repair;

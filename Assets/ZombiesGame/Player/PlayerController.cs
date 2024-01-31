@@ -58,6 +58,7 @@ namespace Zombies.Player
 
             _states.Initialize(_stateInfo.InitHealth, _stateInfo.HealInterval, true, Dead, Damage, ChangeHealth);
             _inventory.Initialize(_stateInfo.InitMoney, _stateInfo.InitGun, _gunRootTran, _inventoryProgressSO);
+            _interact.UseInteractEvent += _inputSO.UseInteractInput;
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
@@ -86,6 +87,7 @@ namespace Zombies.Player
             _stateEventSO.ShotEvent -= Shot;
             _stateEventSO.ReloadEvent -= Reload;
             _stateEventSO.ChangeWeaponEvent -= ChangeWeapon;
+            _interact.UseInteractEvent -= _inputSO.UseInteractInput;
         }
 
         private void Update()

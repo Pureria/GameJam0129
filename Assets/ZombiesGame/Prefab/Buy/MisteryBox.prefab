@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 1840232859681541583}
   - component: {fileID: 1840232859681541581}
   - component: {fileID: 1840232859681541576}
+  - component: {fileID: 7422907422628460409}
   m_Layer: 6
   m_Name: MisteryBox
   m_TagString: Untagged
@@ -234,7 +235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840232859681541577}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.77, y: -11.43, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -307,6 +308,22 @@ MonoBehaviour:
   - {fileID: 7090124978041778135, guid: f893190f02b714f4aa276384561b821a, type: 3}
   - {fileID: 7090124978041778135, guid: c75885bfd204fe040b2c82289b0476ad, type: 3}
   _anim: {fileID: 1840232859681541583}
+--- !u!208 &7422907422628460409
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840232859681541577}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1840232859871740183
 GameObject:
   m_ObjectHideFlags: 0
