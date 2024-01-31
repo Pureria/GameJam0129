@@ -14,7 +14,7 @@ namespace Zombies.InteractObject
         {
             base.Buy(tCore);
 
-            if (!CheckCanPerkBuy<DoubleTapPerk>(tCore)) return;
+            if (!CheckCanPerkBuy(tCore, _perk)) return;
             if (!tCore.GetCoreComponentBool<PerkInventory>(out PerkInventory tPerkInventory)) return;
             tPerkInventory.AddPerk(_perk);
         }
@@ -25,10 +25,10 @@ namespace Zombies.InteractObject
         /// <param name="tCore">購入するオブジェクトのコア</param>
         /// <typeparam name="T">チェックするパークの種類</typeparam>
         /// <returns>TRUE : 買える　FALSE : 買えない</returns>
-        protected bool CheckCanPerkBuy<T>(Core.Core tCore) where T : BasePerk
+        protected bool CheckCanPerkBuy(Core.Core tCore, BasePerk cPerk)
         {
             if(!tCore.GetCoreComponentBool<PerkInventory>(out PerkInventory tPerkInventory)) return false;
-            if (tPerkInventory.CheckPerk<T>()) return false;
+            if (tPerkInventory.CheckPerk(cPerk)) return false;
 
             if (tCore.GetCoreComponentBool<Inventory>(out Inventory tInventory))
             {

@@ -202,7 +202,18 @@ namespace Zombies.Player
         private void Dead()
         {
             Debug.Log($"{transform.name} : Dead");
-            _stateMachine.ChangeState(_lastStandState);
+
+            if (_perkInventory.CheckPerk<RevivePerk>())
+            {
+                _perkInventory.AllDelPerk();
+                _stateMachine.ChangeState(_lastStandState);
+            }
+            else
+            {
+                //ゲームオーバーイベント
+                Debug.Log("ゲームオーバー");
+            }
+            
         }
 
         private void Shot()
@@ -246,6 +257,7 @@ namespace Zombies.Player
                     break;
                 
                 case LastStandState:
+                    _states.SetInvisible(false);
                     _stateMachine.ChangeState(_idleState);
                     break;
                 

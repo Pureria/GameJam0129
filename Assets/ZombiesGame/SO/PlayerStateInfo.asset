@@ -18,5 +18,6 @@ MonoBehaviour:
   _runSpeed: 10
   _stamina: 100
   _interactDistance: 1.5
-  _initMoney: 10000
+  _lastStandTime: 5
+  _initMoney: 20000
   _initGun: {fileID: 7090124978041778135, guid: f893190f02b714f4aa276384561b821a, type: 3}
