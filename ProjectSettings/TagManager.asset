@@ -56,6 +56,9 @@ TagManager:
   - name: Gun
     uniqueID: 1292692075
     locked: 0
+  - name: Effect
+    uniqueID: 663077163
+    locked: 0
   - name: Wall
     uniqueID: 1417761133
     locked: 0
