@@ -45,6 +45,7 @@ namespace Zombies.Player
 
         private State.IdleState _idleState;
         private State.MoveState _moveState;
+        private State.LastStandState _lastStandState;
 
         private void Start()
         {
@@ -68,6 +69,7 @@ namespace Zombies.Player
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
+            _lastStandState = new LastStandState(_anim, "lastStand", _stateInfo, _stateEventSO, _inputSO);
 
             _stateMachine = new StateMachine(_idleState);
             
@@ -197,7 +199,11 @@ namespace Zombies.Player
 
         private void Damage() { Debug.Log($"{transform.name} : Damage"); }
 
-        private void Dead() { Debug.Log($"{transform.name} : Dead"); }
+        private void Dead()
+        {
+            Debug.Log($"{transform.name} : Dead");
+            _stateMachine.ChangeState(_lastStandState);
+        }
 
         private void Shot()
         {
@@ -236,6 +242,10 @@ namespace Zombies.Player
                     break;
                 
                 case MoveState:
+                    _stateMachine.ChangeState(_idleState);
+                    break;
+                
+                case LastStandState:
                     _stateMachine.ChangeState(_idleState);
                     break;
                 
