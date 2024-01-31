@@ -9,9 +9,18 @@ namespace Zombies.Core
     {
         public Action<Core> InteractEvent;
         
+        private bool _canInteract;
+
+        private void Start()
+        {
+            _canInteract = true;
+        }
+
         //インタラクトされたときに呼ばれる
         public void CallInteractEvent(Core targetCore)
         {
+            if (!_canInteract) return;
+            
             InteractEvent?.Invoke(targetCore);
         }
         
@@ -33,18 +42,8 @@ namespace Zombies.Core
                 tInteract.CallInteractEvent(core);
                 break;
             }
-            
-            /*
-            if (hit.transform == null) return;
-
-            Core tCore = hit.transform.root.GetComponentInChildren<Core>();
-            if (tCore == null) return;
-            
-            Interact tInteract = tCore.GetCoreComponent<Interact>();
-            if (tInteract == null) return;
-
-            tInteract.CallInteract(me);
-            */
         }
+        
+        public void SetCanInteract(bool canInteract) => _canInteract = canInteract;
     }
 }
