@@ -13,7 +13,7 @@ namespace Zombies.Core
 
         public Action<List<BasePerk>> RefleshPerkEvent;
 
-        private void Awake()
+        protected override void Awake()
         {
             base.Awake();
             
