@@ -188,16 +188,19 @@ namespace Zombies.Core
         private void ActiveGunReloading(float progress)
         {
             _progressSO.ReloadProgress = progress;
+            _progressSO.RefleshInventoryEvent?.Invoke();
         }
         
         private void ChangeCurrentMagazine(int currentMagazine)
         {
             _progressSO.CurrentMagazine = currentMagazine;
+            _progressSO.RefleshInventoryEvent?.Invoke();
         }
 
         private void ChangeCurrentAmmo(int currentAmmo)
         {
             _progressSO.CurrentAmmo = currentAmmo;
+            _progressSO.RefleshInventoryEvent?.Invoke();
         }
     }
 }

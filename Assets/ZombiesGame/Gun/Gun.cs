@@ -82,6 +82,7 @@ namespace Zombies.Gun
         public void ReloadCancel()
         {
             _isReload = false;
+            _gunEventSO.OnReloadEndEvent?.Invoke();
         }
 
         private void Reload()
