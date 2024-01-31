@@ -120,6 +120,9 @@ namespace Zombies.Player
             Vector3 gunLookPos = lookPos - gunPos;
             float angle = Mathf.Atan2(gunLookPos.y, gunLookPos.x) * Mathf.Rad2Deg;
             _gunRootTran.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            //インタラクトできるものがあるか
+            FindCanInteract();
         }
 
         private void FixedUpdate()
@@ -164,6 +167,24 @@ namespace Zombies.Player
             
             _interact.FindInteract(_core, pos, ((Vector2)lookPos - (Vector2)pos).normalized , _stateInfo.InteractDistance,
                 _interactLayer);
+        }
+
+        private void FindCanInteract()
+        {
+            Vector2 pos = transform.position;
+            Vector3 lookPos = GetMouseToWorldPoint();
+            if (_interact.CanInteract(_core, pos, ((Vector2)lookPos - (Vector2)pos).normalized,
+                    _stateInfo.InteractDistance,
+                    _interactLayer, out string text))
+            {
+                _playerProgressSO.CanInteract = true;
+                _playerProgressSO.InteractText = text;
+            }
+            else
+            {
+                _playerProgressSO.CanInteract = false;
+                _playerProgressSO.InteractText = "";
+            }
         }
 
         private void CheckRotation()

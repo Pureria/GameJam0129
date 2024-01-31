@@ -11,6 +11,11 @@ namespace Zombies.Player
         public float Health = 0;
         public float Stamina = 0;
 
+        [Header("Interact Info")] 
+        public bool CanInteract = false;
+
+        public string InteractText = "";
+        
         public Action<float,float> ChangeHealthEvent;
 
         public void ChangeHealth(float maxHealth)

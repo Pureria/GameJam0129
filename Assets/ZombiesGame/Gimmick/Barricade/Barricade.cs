@@ -36,6 +36,7 @@ namespace Zombies.Gimmick
             _states.Initialize(4, 0, false, Dead, Damage, ChangeHealth);
             _states.SetDamageOne(true);
             _interact.InteractEvent += Repair;
+            _interact.SetInteractText("Press Hold F to Repair");
             ChangeHealth();
             
             SpawnZombieTask(this.GetCancellationTokenOnDestroy()).Forget();

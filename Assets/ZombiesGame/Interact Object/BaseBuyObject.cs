@@ -17,6 +17,7 @@ namespace Zombies.InteractObject
             _core = GetComponentInChildren<Core.Core>();
             _interact = _core.GetCoreComponent<Core.Interact>();
 
+            _interact.SetInteractText($"Buy {_buyObjectInfoSO.Name} : {_buyObjectInfoSO.Price}");
             _interact.InteractEvent += CheckCanBuy;
         }
 
