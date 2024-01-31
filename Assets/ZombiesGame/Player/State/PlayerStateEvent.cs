@@ -14,5 +14,7 @@ namespace Zombies.State
         [HideInInspector] public Action InteractEvent;
         [HideInInspector] public Action ReloadEvent;
         [HideInInspector] public Action ChangeWeaponEvent;
+        [HideInInspector] public Action GamePlayEvent;
+        [HideInInspector] public Action LastStandEvent;
     }
 }

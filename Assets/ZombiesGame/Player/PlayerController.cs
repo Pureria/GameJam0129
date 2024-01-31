@@ -27,6 +27,7 @@ namespace Zombies.Player
         [SerializeField] private InputSO _inputSO;
         [SerializeField] private PlayerStateEvent _stateEventSO;
         [SerializeField] private CurrentPerkSO _currentPerkSO;
+        [SerializeField] private PlayerCallEvent _callEvent;
 
         [Header("Component")]
         [SerializeField] private Animator _anim;
@@ -83,6 +84,8 @@ namespace Zombies.Player
             _stateEventSO.ShotEvent += Shot;
             _stateEventSO.ReloadEvent += Reload;
             _stateEventSO.ChangeWeaponEvent += ChangeWeapon;
+            _stateEventSO.GamePlayEvent += _callEvent.OnGamePlayEvent;
+            _stateEventSO.LastStandEvent += _callEvent.OnLastStandEvent;
         }
 
         private void OnDisable()
@@ -94,6 +97,8 @@ namespace Zombies.Player
             _stateEventSO.ChangeWeaponEvent -= ChangeWeapon;
             _interact.UseInteractEvent -= _inputSO.UseInteractInput;
             _perkInventory.RefleshPerkEvent -= _currentPerkSO.RefleshPerk;
+            _stateEventSO.GamePlayEvent -= _callEvent.OnGamePlayEvent;
+            _stateEventSO.LastStandEvent -= _callEvent.OnLastStandEvent;
         }
 
         private void Update()
