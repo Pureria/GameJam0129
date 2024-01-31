@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Zombies.Core;
 using Zombies.Zombie;
+using Cysharp.Threading.Tasks;
 
 namespace Zombies.Gimmick
 {
     public class Barricade : MonoBehaviour
     {
         [SerializeField] private Transform _spawnTran;
-        [SerializeField] private GameObject _zombiePrefab;
         [SerializeField] private Animator _anim;
         [SerializeField] private float _reepairInterval = 2.0f;
+        [SerializeField] private float _spawnInterval = 2.0f;
 
         private Core.Core _core;
         private Core.States _states;
@@ -36,7 +38,7 @@ namespace Zombies.Gimmick
             _interact.InteractEvent += Repair;
             ChangeHealth();
             
-            SpawnZombie();
+            SpawnZombieTask(this.GetCancellationTokenOnDestroy()).Forget();
         }
 
         private void OnDisable()
@@ -46,8 +48,13 @@ namespace Zombies.Gimmick
 
         private void SpawnZombie()
         {
-            ZombiesController zombie = Instantiate(_zombiePrefab, _spawnTran.position, Quaternion.identity).GetComponent<ZombiesController>();
-            zombie.Setup(this.transform);
+            //ZombiesController zombie = Instantiate(_zombiePrefab, _spawnTran.position, Quaternion.identity).GetComponent<ZombiesController>();
+            //zombie.Setup(this.transform);
+
+            if (ZombieManager.Instance.ZombieInstantiate(_spawnTran, out ZombiesController zombie))
+            {
+                zombie.Setup(this.transform);
+            }
         }
         
         private void Dead() {}
@@ -69,6 +76,20 @@ namespace Zombies.Gimmick
             if (tInventory == null) return;
 
             tInventory.AddMoney(10);
+        }
+        
+        //スポーンインターバル毎にゾンビをスポーンさせる
+        //UniTaskを使う
+        private async UniTask SpawnZombieTask(CancellationToken token)
+        {
+            //ゲーム中だったら
+            bool NowGame = true;
+            
+            while (NowGame)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(_spawnInterval), cancellationToken: token);
+                SpawnZombie();
+            }
         }
     }
 }

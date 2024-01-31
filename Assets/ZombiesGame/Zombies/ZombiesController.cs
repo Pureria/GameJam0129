@@ -41,26 +41,45 @@ namespace Zombies.Zombie
         private Zombie_AttackState _attackState;
         private Zombie_DeadState _deadState;
 
+        public Action OnDeadEvent;
+        
         private void Awake()
         {
             _stateEventSO = new ZombieStateEventSO();
         }
 
+        /*
         private void OnEnable()
         {
             _stateEventSO.SetCanMoveEvent += SetCanMove;
             _stateEventSO.MoveEvent += Move;
             _stateEventSO.CheckAttackEvent += CheckAnyTarget;
         }
+        */
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _stateEventSO.SetCanMoveEvent -= SetCanMove;
             _stateEventSO.MoveEvent -= Move;
             _stateEventSO.CheckAttackEvent -= CheckAnyTarget;
-            _damage._damageEvent -= Damage;
+
+            if (_damage != null)
+            {
+                _damage._damageEvent -= Damage;
+            }
+            
         }
 
+        public void Initialize()
+        {
+            _states.Initialize(ZombieManager.Instance.GetMaxHealth(), 0, false, Dead, Damage, ChangeHealth);
+            _agent.SetCanMove(true);
+            _agent.SetSpeed(_infoSo.WalkSpeed);
+            _isBarricade = true;
+
+            _stateMachine.ChangeState(_idleState);
+        }
+        
         private void Start()
         {
             _core = GetComponentInChildren<Core.Core>();
@@ -71,20 +90,20 @@ namespace Zombies.Zombie
             }
             _states = _core.GetCoreComponent<States>();
             _damage = _core.GetCoreComponent<Damage>();
-            _states.Initialize(ZombieManager.Instance.GetMaxHealth(), 0, false, Dead, Damage, ChangeHealth);
             
+            _stateEventSO.SetCanMoveEvent += SetCanMove;
+            _stateEventSO.MoveEvent += Move;
+            _stateEventSO.CheckAttackEvent += CheckAnyTarget;
             _damage._damageEvent += Damage;
-            
-            _agent.SetCanMove(true);
-            _agent.SetSpeed(_infoSo.WalkSpeed);
             
             _idleState = new Zombie_IdleState(_anim, "idle", _infoSo, _stateEventSO);
             _moveState = new Zombie_MoveState(_anim, "move", _infoSo, _stateEventSO);
             _attackState = new Zombie_AttackState(_anim, "attack", _infoSo, _stateEventSO);
             _deadState = new Zombie_DeadState(_anim, "dead", _infoSo, _stateEventSO);
             _stateMachine = new StateMachine(_idleState);
-
-            _isBarricade = true;
+            
+            //Initialize();
+            this.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -188,7 +207,7 @@ namespace Zombies.Zombie
                     break;
                 
                 case Zombie_DeadState:
-                    Destroy(this.gameObject);
+                    OnDeadEvent?.Invoke();
                     break;
                 
                 default:
