@@ -58,6 +58,7 @@ namespace Zombies.Gimmick
         }
         
         private void Dead() {}
+
         private void Damage() {}
 
         private void ChangeHealth()
@@ -70,6 +71,7 @@ namespace Zombies.Gimmick
             if(_repairStartTime + _reepairInterval > Time.time) return;
 
             _repairStartTime = Time.time;
+            _states.SetInvisible(false);
             _states.Heal(1);
             ChangeHealth();
             Inventory tInventory = tCore.GetCoreComponent<Inventory>();
