@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 8445799932377201974}
   - component: {fileID: 8445799932377201975}
   - component: {fileID: 2134417157003669558}
-  - component: {fileID: 2134417157003669553}
+  - component: {fileID: 3300457031000577206}
   m_Layer: 6
   m_Name: DoubleTapPerkMachine
   m_TagString: Untagged
@@ -199,7 +199,7 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &2134417157003669553
+--- !u!114 &3300457031000577206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,10 +208,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8445799932377201973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dadf8e9469d25f64eb454db2d2c47449, type: 3}
+  m_Script: {fileID: 11500000, guid: eb3e50a26cdb3af4dbeb7cdf9acd731e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _buyObjectInfoSO: {fileID: 11400000, guid: cb2093b3cdb38794889d04311ff3d1ae, type: 2}
+  _perk: {fileID: 11400000, guid: 7908114b15dace24bad65b062cd95e6d, type: 2}
 --- !u!1 &8445799932559397641
 GameObject:
   m_ObjectHideFlags: 0

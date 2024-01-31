@@ -5,6 +5,7 @@ using Zombies.Core;
 
 namespace Zombies.Perk
 {
+    [CreateAssetMenu(fileName = "JugerNogPerk", menuName = "Zombies/Perk/JugerNogPerk")]
     public class JugerNogPerk : BasePerk
     {
         private States _tStates;

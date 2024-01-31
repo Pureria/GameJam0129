@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zombies.Perk;
+using System;
 
 namespace Zombies.Core
 {
@@ -10,6 +11,8 @@ namespace Zombies.Core
         //パークをリストで待つ
         private List<BasePerk> _pearkList = new List<BasePerk>();
 
+        public Action<List<BasePerk>> RefleshPerkEvent;
+
         private void Awake()
         {
             base.Awake();
@@ -17,7 +20,7 @@ namespace Zombies.Core
             _pearkList.Clear();
         }
         
-        public void AddPeark<T>(T newPerk) where T : BasePerk
+        public void AddPerk<T>(T newPerk) where T : BasePerk
         {
             //同じ型のパークがなければ新しく追加
             foreach (BasePerk perk in _pearkList)
@@ -30,6 +33,16 @@ namespace Zombies.Core
 
             newPerk.EnterPerk(_core);
             _pearkList.Add(newPerk);
+            RefleshPerkEvent?.Invoke(_pearkList);
+        }
+
+        public void AddPerk(BasePerk addPerk)
+        {
+            if (!_pearkList.Contains(addPerk))
+            {
+                _pearkList.Add(addPerk);
+                RefleshPerkEvent?.Invoke(_pearkList);
+            }
         }
 
         public void DelPeark<T>() where T : BasePerk
@@ -40,6 +53,7 @@ namespace Zombies.Core
                 {
                     perk.ExitPerk(_core);
                     _pearkList.Remove(perk);
+                    RefleshPerkEvent?.Invoke(_pearkList);
                     return;
                 }
             }
@@ -53,6 +67,7 @@ namespace Zombies.Core
             }
             
             _pearkList.Clear();
+            RefleshPerkEvent?.Invoke(_pearkList);
         }
 
         /// <summary>
@@ -65,6 +80,24 @@ namespace Zombies.Core
             foreach (BasePerk perk in _pearkList)
             {
                 if (perk.GetType() == typeof(T))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 同じ型のパークがあるかチェック
+        /// </summary>
+        /// <typeparam name="checkPerk">確認するパークの方</typeparam>
+        /// <returns>TRUE : 存在する False : 存在しない</returns>
+        public bool CheckPerk(BasePerk checkPerk)
+        {
+            foreach (BasePerk perk in _pearkList)
+            {
+                if (perk == checkPerk)
                 {
                     return true;
                 }

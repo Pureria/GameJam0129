@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Zombies.Input;
 using Zombies.Core;
+using Zombies.Perk;
 using Zombies.Player.State;
 using Zombies.State;
 using StateMachine = Zombies.State.StateMachine;
@@ -25,6 +26,7 @@ namespace Zombies.Player
         [Header("Current Data")]
         [SerializeField] private InputSO _inputSO;
         [SerializeField] private PlayerStateEvent _stateEventSO;
+        [SerializeField] private CurrentPerkSO _currentPerkSO;
 
         [Header("Component")]
         [SerializeField] private Animator _anim;
@@ -36,6 +38,7 @@ namespace Zombies.Player
         private Interact _interact;
         private States _states;
         private Inventory _inventory;
+        private PerkInventory _perkInventory;
 
         private StateMachine _stateMachine;
 
@@ -55,10 +58,12 @@ namespace Zombies.Player
             _interact = _core.GetCoreComponent<Interact>();
             _states = _core.GetCoreComponent<States>();
             _inventory = _core.GetCoreComponent<Inventory>();
+            _perkInventory = _core.GetCoreComponent<PerkInventory>();
 
             _states.Initialize(_stateInfo.InitHealth, _stateInfo.HealInterval, true, Dead, Damage, ChangeHealth);
             _inventory.Initialize(_stateInfo.InitMoney, _stateInfo.InitGun, _gunRootTran, _inventoryProgressSO);
             _interact.UseInteractEvent += _inputSO.UseInteractInput;
+            _perkInventory.RefleshPerkEvent += _currentPerkSO.RefleshPerk;
             
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
@@ -88,6 +93,7 @@ namespace Zombies.Player
             _stateEventSO.ReloadEvent -= Reload;
             _stateEventSO.ChangeWeaponEvent -= ChangeWeapon;
             _interact.UseInteractEvent -= _inputSO.UseInteractInput;
+            _perkInventory.RefleshPerkEvent -= _currentPerkSO.RefleshPerk;
         }
 
         private void Update()

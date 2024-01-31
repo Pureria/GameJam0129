@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Zombies.Perk
 {
+    [CreateAssetMenu(fileName = "DoubleTapPerk", menuName = "Zombies/Perk/DoubleTapPerk")]
     public class DoubleTapPerk : BasePerk
     {
         public override void EnterPerk(Core.Core core){}

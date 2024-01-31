@@ -6,8 +6,19 @@ using Zombies.Perk;
 
 namespace Zombies.InteractObject
 {
-    public class BasePerkMachine : BaseBuyObject
+    public class PerkMachine : BaseBuyObject
     {
+        [SerializeField] private BasePerk _perk;
+
+        protected override void Buy(Core.Core tCore)
+        {
+            base.Buy(tCore);
+
+            if (!CheckCanPerkBuy<DoubleTapPerk>(tCore)) return;
+            if (!tCore.GetCoreComponentBool<PerkInventory>(out PerkInventory tPerkInventory)) return;
+            tPerkInventory.AddPerk(_perk);
+        }
+        
         /// <summary>
         /// パークを購入することができるか？
         /// </summary>

@@ -86,8 +86,8 @@ GameObject:
   m_Component:
   - component: {fileID: 805986790705228782}
   - component: {fileID: 805986790705228783}
-  - component: {fileID: 805986790705228780}
   - component: {fileID: 7170869586220017390}
+  - component: {fileID: 8968655768856706107}
   m_Layer: 6
   m_Name: JugerNogPerkMachine
   m_TagString: Untagged
@@ -138,19 +138,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1438441, y: 2.0891056}
   m_EdgeRadius: 0
---- !u!114 &805986790705228780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 805986790705228781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78dc879223e2b5b4883a698858cde12e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buyObjectInfoSO: {fileID: 11400000, guid: 61bbe26f1433a334a936b7404a4642de, type: 2}
 --- !u!208 &7170869586220017390
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -167,6 +154,20 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &8968655768856706107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805986790705228781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3e50a26cdb3af4dbeb7cdf9acd731e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buyObjectInfoSO: {fileID: 11400000, guid: 61bbe26f1433a334a936b7404a4642de, type: 2}
+  _perk: {fileID: 11400000, guid: d039ff89f58746e458b2ae7af0584d70, type: 2}
 --- !u!1 &805986790892439036
 GameObject:
   m_ObjectHideFlags: 0
