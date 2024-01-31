@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Zombies
 {
     [CreateAssetMenu(fileName = "InventoryProgressSO", menuName = "Zombies/Inventory/InventoryProgressSO")]
     public class InventoryProgressSO : ScriptableObject
     {
+        public Action RefleshInventoryEvent;
+        
         [Header("お金")]
         public float NowMoney = 0;
         [Header("現在取得している銃の情報")]

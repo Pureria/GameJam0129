@@ -28,6 +28,14 @@ namespace Zombies.Core
             _core.GetCoreComponent<PerkInventory>(ref _perkInventory);
         }
 
+        private void OnDestroy()
+        {
+            foreach(Gun.Gun gun in _guns)
+            {
+                gun.OnShotEvent -= SetProgressData;
+            }
+        }
+
         public void AddMoney(int amount)
         {
             _nowMoney += amount;
@@ -58,8 +66,6 @@ namespace Zombies.Core
             gun.transform.parent = _gunRootTransform;
             if (gun.TryGetComponent<Gun.Gun>(out Gun.Gun gunScript))
             {
-                gunScript.Initialize();
-
                 //ミュールキックは実装する予定なし！！
                 if (_guns.Count >= 2)
                 {
@@ -67,13 +73,13 @@ namespace Zombies.Core
                     GameObject delGunObj = _guns[_nowWeaponIndex].gameObject;
                     _guns[_nowWeaponIndex] = gunScript;
                     Destroy(delGunObj);
-                    _guns[_nowWeaponIndex].Initialize();
+                    _guns[_nowWeaponIndex].Initialize(SetProgressData);
                 }
                 else
                 {
                     //追加したうえでその武器に切り替える
                     _guns.Add(gunScript);
-                    gunScript.Initialize();
+                    gunScript.Initialize(SetProgressData);
                     SetActiveGun(_nowWeaponIndex + 1);
                 }
                 
@@ -112,7 +118,7 @@ namespace Zombies.Core
             if (gun.TryGetComponent<Gun.Gun>(out Gun.Gun gunScript))
             {
                 _guns.Add(gunScript);
-                gunScript.Initialize();
+                gunScript.Initialize(SetProgressData);
                 SetActiveGun(0);
             }
             
@@ -154,6 +160,8 @@ namespace Zombies.Core
             {
                 _progressSO.GunList.Add(gun.GetGunInfo().GunName);
             }
+            
+            _progressSO.RefleshInventoryEvent?.Invoke();
         }
 
         private void OnDisable()

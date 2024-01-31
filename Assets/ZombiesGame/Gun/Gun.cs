@@ -25,6 +25,8 @@ namespace Zombies.Gun
         public int GetCurrentAmmo() => _currentAmmo;
         public GunInfoSO GetGunInfo() => _gunInfo;
 
+        public Action OnShotEvent;
+
         private void Update()
         {
             if (_isReload && _reloadStartTime + _gunInfo.ReloadTime <= Time.time)
@@ -63,6 +65,8 @@ namespace Zombies.Gun
             Ammo ammoScript = ammo.GetComponent<Ammo>();
             ammoScript.SetParam(to, _gunInfo.AmmoSpeed, damage, pCore);
             _gunEventSO.OnChangeCurrentMagazineEvent?.Invoke(_currentMagazine);
+            
+            OnShotEvent?.Invoke();
         }
 
         public void StartReload()
@@ -95,11 +99,13 @@ namespace Zombies.Gun
             _gunEventSO.OnChangeCurrentAmmoEvent?.Invoke(_currentAmmo);
         }
 
-        public void Initialize()
+        public void Initialize(Action shotEvent)
         {
             _currentAmmo = _gunInfo.MaxAmmo;
             _currentMagazine = _gunInfo.MagazineSize;
             _isReload = false;
+
+            OnShotEvent = shotEvent;
         }
         
         public GunEventSO GetGunEventSO() => _gunEventSO;
