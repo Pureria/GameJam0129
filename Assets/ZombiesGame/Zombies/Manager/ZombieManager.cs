@@ -27,6 +27,8 @@ namespace Zombies.Zombie
         
         private List<ZombieListInfo> _zombieList = new List<ZombieListInfo>();
 
+        public Action<Transform> OnSetTargetEvent;
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -41,6 +43,8 @@ namespace Zombies.Zombie
             {
                 GameObject zombie = Instantiate(_zombiePrefab, _currentZombies);
                 if (!zombie.TryGetComponent<ZombiesController>(out ZombiesController controller)) continue;
+                OnSetTargetEvent += controller.SetTarget;
+                controller.OnDestroyEvent -= DestroyZombies;
                 ZombieListInfo zombieListInfo = new ZombieListInfo(zombie, i, controller);
                 _zombieList.Add(zombieListInfo);
             }
@@ -89,6 +93,12 @@ namespace Zombies.Zombie
         private void Dead()
         {
             _deadCount++;
+        }
+
+        private void DestroyZombies(ZombiesController dZombie)
+        {
+            OnSetTargetEvent -= dZombie.SetTarget;
+            dZombie.OnDestroyEvent -= DestroyZombies;
         }
     }
 

@@ -42,6 +42,7 @@ namespace Zombies.Zombie
         private Zombie_DeadState _deadState;
 
         public Action OnDeadEvent;
+        public Action<ZombiesController> OnDestroyEvent;
         
         private void Awake()
         {
@@ -68,6 +69,7 @@ namespace Zombies.Zombie
                 _damage._damageEvent -= Damage;
             }
             
+            OnDestroyEvent?.Invoke(this);
         }
 
         public void Initialize()
@@ -233,7 +235,7 @@ namespace Zombies.Zombie
         }
         
         private void SetCanMove(bool canMove) => _agent.SetCanMove(canMove);
-        private void SetTarget(Transform tran) => _targetTran = tran;
+        public void SetTarget(Transform tran) => _targetTran = tran;
         private void ChangeHealth(){}
         private void Damage(){ Debug.Log(($"{transform.name} :ダメージ"));}
         private void Dead(){ _stateMachine.ChangeState(_deadState); }
