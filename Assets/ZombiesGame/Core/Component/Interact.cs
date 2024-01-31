@@ -10,6 +10,14 @@ namespace Zombies.Core
         public Action<Core> InteractEvent;
         
         private bool _canInteract;
+        
+        /***********/
+        //デバッグ用変数
+        private bool _isDebug = false;
+        private Vector2 _origin;
+        private Vector2 _direction;
+        /***********/
+        
 
         private void Start()
         {
@@ -28,6 +36,7 @@ namespace Zombies.Core
         public void FindInteract(Core core, Vector2 origin, Vector2 direction, float distance, LayerMask interactLayer)
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, distance, interactLayer);
+            Debug.DrawRay(origin, direction);
             
             foreach (RaycastHit2D hit in hits)
             {
@@ -43,7 +52,18 @@ namespace Zombies.Core
                 break;
             }
         }
-        
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+
+            if (Application.isPlaying)
+            {
+                //Gizmos.DrawLine(_origin, _direction);
+                //Gizmos.DrawRay(_origin, _direction);
+            }
+        }
+
         public void SetCanInteract(bool canInteract) => _canInteract = canInteract;
     }
 }

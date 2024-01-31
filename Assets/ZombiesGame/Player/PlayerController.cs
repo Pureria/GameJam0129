@@ -147,7 +147,7 @@ namespace Zombies.Player
             Vector2 pos = transform.position;
             Vector3 lookPos = GetMouseToWorldPoint();
             
-            _interact.FindInteract(_core, pos, (Vector2)lookPos.normalized, _stateInfo.InteractDistance,
+            _interact.FindInteract(_core, pos, ((Vector2)lookPos - (Vector2)pos).normalized , _stateInfo.InteractDistance,
                 _interactLayer);
         }
 
