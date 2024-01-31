@@ -10,14 +10,6 @@ namespace Zombies.Core
         public Action<Core> InteractEvent;
         
         private bool _canInteract;
-        
-        /***********/
-        //デバッグ用変数
-        private bool _isDebug = false;
-        private Vector2 _origin;
-        private Vector2 _direction;
-        /***********/
-        
 
         private void Start()
         {

@@ -7,6 +7,7 @@ namespace Zombies.Core
 {
     public class States : CoreComponent
     {
+        private float _initMaxHealth;
         private float _maxHealth;
         private float _health;
         private float _healInterval;
@@ -19,12 +20,14 @@ namespace Zombies.Core
         private bool _isDamageOne;
         private bool _isDead;
         private bool _isInvisible;
+        private bool _isJeagerNog;
 
         public float Health => _health;
         public bool IsDead => _isDead;
 
         public void Initialize(float maxHealth, float healInterval, bool isAutoHeal, Action deadEvent, Action damageEvent, Action changeHealthEvent)
         {
+            _initMaxHealth = maxHealth;
             _maxHealth = maxHealth;
             _health = maxHealth;
             _deadEvent = deadEvent;
@@ -88,7 +91,20 @@ namespace Zombies.Core
         {
             _isDamageOne = isDamageOne;
         }
+        
+        public void SetJugerNog(bool isJeagerNog)
+        {
+            _isJeagerNog = isJeagerNog;
+            if (_isJeagerNog) SetHealth(_initMaxHealth * 2);
+            else SetHealth(_initMaxHealth);
+        }
 
         public void SetInvisible(bool invisible) => _isInvisible = invisible;
+
+        private void SetHealth(float maxHealth)
+        {
+            _maxHealth = maxHealth;
+            _health = maxHealth;
+        }
     }
 }

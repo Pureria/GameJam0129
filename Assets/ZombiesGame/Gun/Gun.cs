@@ -17,12 +17,19 @@ namespace Zombies.Gun
         private bool _isReload;
         private float _shotTime;
         private float _reloadStartTime;
+        
+        private bool _isDoubleTapRootper;
 
         public bool GetIsFullAuto() => _gunInfo.IsFullAuto;
         public int GetCurrentMagazine() => _currentMagazine;
         public int GetCurrentAmmo() => _currentAmmo;
         public GunInfoSO GetGunInfo() => _gunInfo;
-        
+
+        private void Start()
+        {
+            _isDoubleTapRootper = false;
+        }
+
         private void Update()
         {
             if (_isReload && _reloadStartTime + _gunInfo.ReloadTime <= Time.time)
@@ -45,11 +52,14 @@ namespace Zombies.Gun
                 return;
             }
 
+            float damage = _gunInfo.Damage;
+            if (_isDoubleTapRootper) damage = damage * 2;
+            
             _shotTime = Time.time;
             _currentMagazine--;
             GameObject ammo = Instantiate(_ammoPrefab, _muzzle.position, Quaternion.identity);
             Ammo ammoScript = ammo.GetComponent<Ammo>();
-            ammoScript.SetParam(to, _gunInfo.AmmoSpeed, _gunInfo.Damage, pCore);
+            ammoScript.SetParam(to, _gunInfo.AmmoSpeed, damage, pCore);
             _gunEventSO.OnChangeCurrentMagazineEvent?.Invoke(_currentMagazine);
         }
 
@@ -91,5 +101,6 @@ namespace Zombies.Gun
         }
         
         public GunEventSO GetGunEventSO() => _gunEventSO;
+        public void SetDoubleTapRootper(bool isDoubleTapRootper) => _isDoubleTapRootper = isDoubleTapRootper;
     }
 }
