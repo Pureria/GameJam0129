@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zombies.Core;
+using Zombies.Perk;
 
 namespace Zombies.Gun
 {
@@ -17,18 +19,11 @@ namespace Zombies.Gun
         private bool _isReload;
         private float _shotTime;
         private float _reloadStartTime;
-        
-        private bool _isDoubleTapRootper;
 
         public bool GetIsFullAuto() => _gunInfo.IsFullAuto;
         public int GetCurrentMagazine() => _currentMagazine;
         public int GetCurrentAmmo() => _currentAmmo;
         public GunInfoSO GetGunInfo() => _gunInfo;
-
-        private void Start()
-        {
-            _isDoubleTapRootper = false;
-        }
 
         private void Update()
         {
@@ -53,7 +48,14 @@ namespace Zombies.Gun
             }
 
             float damage = _gunInfo.Damage;
-            if (_isDoubleTapRootper) damage = damage * 2;
+
+            if (pCore.GetCoreComponentBool<PerkInventory>(out PerkInventory perkInventory))
+            {
+                if (perkInventory.CheckPerk<DoubleTapPerk>())
+                {
+                    damage = damage * 2;
+                }
+            }
             
             _shotTime = Time.time;
             _currentMagazine--;
@@ -101,6 +103,5 @@ namespace Zombies.Gun
         }
         
         public GunEventSO GetGunEventSO() => _gunEventSO;
-        public void SetDoubleTapRootper(bool isDoubleTapRootper) => _isDoubleTapRootper = isDoubleTapRootper;
     }
 }

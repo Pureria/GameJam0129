@@ -9,14 +9,14 @@ namespace Zombies.Core
     public class Inventory : CoreComponent
     {
         //インベントリに機能持たせすぎ！！
-        
         private List<Gun.Gun> _guns = new List<Gun.Gun>();
         private int _nowMoney;
         private int _nowWeaponIndex;
         private Transform _gunRootTransform;
         private InventoryProgressSO _progressSO;
-        
         private GunEventSO _gunEventSo;
+
+        private PerkInventory _perkInventory;
         
         public int Money => _nowMoney;
 
@@ -24,6 +24,8 @@ namespace Zombies.Core
         {
             _nowMoney = 0;
             _nowWeaponIndex = 0;
+            
+            _core.GetCoreComponent<PerkInventory>(ref _perkInventory);
         }
 
         public void AddMoney(int amount)
@@ -141,7 +143,6 @@ namespace Zombies.Core
 
         private void SetProgressData()
         {
-            Debug.Log($"NowMone : {_nowMoney}");
             _progressSO.NowMoney = _nowMoney;
             
             _progressSO.NowGunName = _guns[_nowWeaponIndex].GetGunInfo().GunName;
