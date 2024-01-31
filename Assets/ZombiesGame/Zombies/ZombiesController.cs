@@ -177,7 +177,7 @@ namespace Zombies.Zombie
                 {
                     //バリケードが壊れているため
                     //ターゲットをプレイヤーに変更
-                    SetTarget(_allZombieInfo.GetPlayerTransform());
+                    //SetTarget(_allZombieInfo.GetPlayerTransform());
                     _isBarricade = false;
                     return;
                 }
@@ -219,9 +219,14 @@ namespace Zombies.Zombie
 
         private void Move()
         {
-            if (_targetTran == null) return;
+            Transform targetTran = _targetTran;
 
-            _agent.SetDestination(_targetTran.position);
+            if (!_isBarricade)
+            {
+                targetTran = ZombieManager.Instance.TargetTransform;
+            }
+            else if (targetTran == null) return;
+            _agent.SetDestination(targetTran.position);
         }
 
         //攻撃された際の処理

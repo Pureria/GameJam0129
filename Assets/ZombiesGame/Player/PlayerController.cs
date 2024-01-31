@@ -86,8 +86,8 @@ namespace Zombies.Player
             _stateEventSO.ShotEvent += Shot;
             _stateEventSO.ReloadEvent += Reload;
             _stateEventSO.ChangeWeaponEvent += ChangeWeapon;
-            _stateEventSO.GamePlayEvent += _callEvent.OnGamePlayEvent;
-            _stateEventSO.LastStandEvent += _callEvent.OnLastStandEvent;
+            _stateEventSO.GamePlayEvent += CallGamePlayEvent;
+            _stateEventSO.LastStandEvent += CallLastStandEvent;
         }
 
         private void OnDisable()
@@ -99,8 +99,8 @@ namespace Zombies.Player
             _stateEventSO.ChangeWeaponEvent -= ChangeWeapon;
             _interact.UseInteractEvent -= _inputSO.UseInteractInput;
             _perkInventory.RefleshPerkEvent -= _currentPerkSO.RefleshPerk;
-            _stateEventSO.GamePlayEvent -= _callEvent.OnGamePlayEvent;
-            _stateEventSO.LastStandEvent -= _callEvent.OnLastStandEvent;
+            _stateEventSO.GamePlayEvent -= CallGamePlayEvent;
+            _stateEventSO.LastStandEvent -= CallLastStandEvent;
         }
 
         private void Update()
@@ -212,6 +212,7 @@ namespace Zombies.Player
             {
                 //ゲームオーバーイベント
                 Debug.Log("ゲームオーバー");
+                _callEvent.OnGameOverEvent?.Invoke();
             }
             
         }
@@ -235,6 +236,9 @@ namespace Zombies.Player
             _inputSO.UseChangeNextWeaponInput();
             _inventory.ChangeNextWeapon();
         }
+        
+        private void CallGamePlayEvent() => _callEvent.OnGamePlayEvent?.Invoke();
+        private void CallLastStandEvent() => _callEvent.OnLastStandEvent?.Invoke();
 
         private Vector3 GetMouseToWorldPoint()
         {

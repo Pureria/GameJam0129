@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Zombies.Player;
 
 namespace Zombies.Zombie
 {
@@ -14,21 +16,24 @@ namespace Zombies.Zombie
         [SerializeField] private float _baseHealth;
         [SerializeField] private float _multipleHealth;
         [SerializeField] private AllZombieInfo _allZombieInfo;
+        [SerializeField] private Transform _lastStandMovePoint;
         [SerializeField] private Transform _playerTran;
         
         [Header("Zombie Spawn Info")]
         [SerializeField] private GameObject _zombiePrefab;
-
         [SerializeField] private int _zombieSpawnCount;
         [SerializeField] private Transform _currentZombies;
+
+        [Header("Event")]
+        [SerializeField] private PlayerCallEvent _playerCallEvent;
 
         private int _deadCount;
         private bool _initialize;
         
         private List<ZombieListInfo> _zombieList = new List<ZombieListInfo>();
 
-        public Action<Transform> OnSetTargetEvent;
-
+        public Transform TargetTransform;
+        
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -43,24 +48,31 @@ namespace Zombies.Zombie
             {
                 GameObject zombie = Instantiate(_zombiePrefab, _currentZombies);
                 if (!zombie.TryGetComponent<ZombiesController>(out ZombiesController controller)) continue;
-                OnSetTargetEvent += controller.SetTarget;
-                controller.OnDestroyEvent -= DestroyZombies;
                 ZombieListInfo zombieListInfo = new ZombieListInfo(zombie, i, controller);
                 _zombieList.Add(zombieListInfo);
             }
             
             _deadCount = 0;
+            TargetTransform = _playerTran;
             _initialize = true;
         }
 
         private void OnEnable()
         {
             _allZombieInfo.GetPlayerTransform += GetPlayerTran;
+            
+            _playerCallEvent.OnGamePlayEvent += SetTargetPlayer;
+            _playerCallEvent.OnGameOverEvent += SetTargetLastStand;
+            _playerCallEvent.OnLastStandEvent += SetTargetLastStand;
         }
 
         private void OnDisable()
         {
             _allZombieInfo.GetPlayerTransform -= GetPlayerTran;
+            
+            _playerCallEvent.OnGamePlayEvent -= SetTargetPlayer;
+            _playerCallEvent.OnGameOverEvent -= SetTargetLastStand;
+            _playerCallEvent.OnLastStandEvent -= SetTargetLastStand;
         }
 
         private Transform GetPlayerTran()
@@ -95,10 +107,14 @@ namespace Zombies.Zombie
             _deadCount++;
         }
 
-        private void DestroyZombies(ZombiesController dZombie)
+        private void SetTargetPlayer()
         {
-            OnSetTargetEvent -= dZombie.SetTarget;
-            dZombie.OnDestroyEvent -= DestroyZombies;
+            TargetTransform = _playerTran;
+        }
+
+        private void SetTargetLastStand()
+        {
+            TargetTransform = _lastStandMovePoint;
         }
     }
 
