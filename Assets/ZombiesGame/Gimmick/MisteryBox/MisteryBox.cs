@@ -39,6 +39,8 @@ namespace Zombies.InteractObject
             
             _selectGun = _guns[Random.Range(0, _guns.Count)];
 
+            _interact.SetInteractText($"Get {_selectGun.name}");
+            
             Debug.Log($"MisteryBox: {_selectGun.name}");
             
             _interact.InteractEvent = GetRandomGun;
@@ -52,7 +54,7 @@ namespace Zombies.InteractObject
             //イベントをセットしなおして閉じるアニメーションを再生
             _interact.SetCanInteract(false);
             _interact.InteractEvent = base.CheckCanBuy;
-
+            
             await CloseRandomBox(token);
         }
 
@@ -63,6 +65,7 @@ namespace Zombies.InteractObject
             await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f,
                 cancellationToken: token);
 
+            _interact.SetInteractText(_interactText);
             _interact.SetCanInteract(true);
         }
 

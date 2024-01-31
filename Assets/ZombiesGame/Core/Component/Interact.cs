@@ -10,10 +10,12 @@ namespace Zombies.Core
         public Action<Core> InteractEvent;
         public Action UseInteractEvent;
         
-        private bool _canInteract;
+        private bool _canNowInteract;
         private bool _canInteractHold;
         private bool _showInteractText;
         private string _interactText;
+        
+        public bool CanNowInteract => _canNowInteract;
         public bool CanInteractHold => _canInteractHold;
         public bool ShowInteractText => _showInteractText;
         public string InteractText => _interactText;
@@ -26,13 +28,13 @@ namespace Zombies.Core
         
         private void Start()
         {
-            _canInteract = true;
+            _canNowInteract = true;
         }
 
         //インタラクトされたときに呼ばれる
         public void CallInteractEvent(Core targetCore)
         {
-            if (!_canInteract) return;
+            if (!_canNowInteract) return;
             
             InteractEvent?.Invoke(targetCore);
         }
@@ -70,7 +72,7 @@ namespace Zombies.Core
                 Core tCore = hit.transform.root.GetComponentInChildren<Core>();
                 if (tCore == null) continue;
                 if (!tCore.GetCoreComponentBool<Interact>(out Interact tInteract)) continue;
-                if(!tInteract.ShowInteractText) continue;
+                if(!tInteract.ShowInteractText && !tInteract.CanNowInteract) continue;
                 text = tInteract.InteractText;
                 return true;
             }
@@ -89,7 +91,7 @@ namespace Zombies.Core
             }
         }
 
-        public void SetCanInteract(bool canInteract) => _canInteract = canInteract;
+        public void SetCanInteract(bool canInteract) => _canNowInteract = canInteract;
         public void SetCanHoldInteract(bool canInteractHold) => _canInteractHold = canInteractHold;
 
         public void SetInteractText(string text)
