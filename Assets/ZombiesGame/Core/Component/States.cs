@@ -103,6 +103,7 @@ namespace Zombies.Core
 
         public void SetInvisible(bool invisible) => _isInvisible = invisible;
 
+        public float GetMaxHealth() => _maxHealth;
         private void SetHealth(float maxHealth)
         {
             _maxHealth = maxHealth;

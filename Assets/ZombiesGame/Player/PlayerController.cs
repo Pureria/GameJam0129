@@ -184,7 +184,11 @@ namespace Zombies.Player
             _anim.SetBool("isPlayerRight", _isRight);
         }
 
-        private void ChangeHealth() { _playerProgressSO.Health = _states.Health;; }
+        private void ChangeHealth()
+        {
+            _playerProgressSO.Health = _states.Health;
+            _playerProgressSO.ChangeHealth(_states.GetMaxHealth());
+        }
 
         private void Damage() { Debug.Log($"{transform.name} : Damage"); }
 
