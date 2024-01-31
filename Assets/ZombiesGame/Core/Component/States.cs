@@ -106,6 +106,7 @@ namespace Zombies.Core
         public float GetMaxHealth() => _maxHealth;
         private void SetHealth(float maxHealth)
         {
+            Debug.Log($"MaxHealth:{maxHealth}");
             _maxHealth = maxHealth;
             _health = maxHealth;
         }

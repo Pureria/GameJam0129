@@ -19,27 +19,12 @@ namespace Zombies.Core
             
             _pearkList.Clear();
         }
-        
-        public void AddPerk<T>(T newPerk) where T : BasePerk
-        {
-            //同じ型のパークがなければ新しく追加
-            foreach (BasePerk perk in _pearkList)
-            {
-                if (perk.GetType() == typeof(T))
-                {
-                    return;
-                }
-            }
-
-            newPerk.EnterPerk(_core);
-            _pearkList.Add(newPerk);
-            RefleshPerkEvent?.Invoke(_pearkList);
-        }
 
         public void AddPerk(BasePerk addPerk)
         {
             if (!_pearkList.Contains(addPerk))
             {
+                addPerk.EnterPerk(_core);
                 _pearkList.Add(addPerk);
                 RefleshPerkEvent?.Invoke(_pearkList);
             }

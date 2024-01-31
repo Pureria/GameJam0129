@@ -24,7 +24,8 @@ namespace Zombies.UI
 
         private void ChangeHealth(float maxHealth, float currentHealth)
         {
-            
+            _healthSlider.maxValue = maxHealth;
+            _healthSlider.value = currentHealth;
         }
     }
 }
