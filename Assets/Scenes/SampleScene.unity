@@ -12052,6 +12052,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -4.18
       objectReference: {fileID: 0}
+    - target: {fileID: 5263896615668248425, guid: b277d16440ee9d846a093d6310655014, type: 3}
+      propertyPath: _listnerID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263896615668248425, guid: b277d16440ee9d846a093d6310655014, type: 3}
+      propertyPath: _canStartSpawn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7269025894477998607, guid: b277d16440ee9d846a093d6310655014, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -12102,7 +12110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786728493232361681, guid: b277d16440ee9d846a093d6310655014, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b277d16440ee9d846a093d6310655014, type: 3}
@@ -12948,6 +12956,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2566680537411559068, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
+      propertyPath: _sendID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2566680537411559069, guid: 0036cedf49c7c7549a354ada6e24d343, type: 3}
       propertyPath: m_Name
       value: Door
@@ -13217,7 +13229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786728493232361681, guid: b277d16440ee9d846a093d6310655014, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b277d16440ee9d846a093d6310655014, type: 3}

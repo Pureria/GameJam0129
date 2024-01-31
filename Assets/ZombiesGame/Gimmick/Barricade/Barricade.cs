@@ -13,6 +13,11 @@ namespace Zombies.Gimmick
     {
         [SerializeField] private Transform _spawnTran;
         [SerializeField] private Animator _anim;
+        
+        [Header("Zombie Spawn Info")]
+        [SerializeField] private ZombieSpawnListenerSO _zombieSpawnListenerSO;
+        [SerializeField] private int _listnerID = 0;
+        [SerializeField] private bool _canStartSpawn = true;
         [SerializeField] private float _reepairInterval = 2.0f;
         [SerializeField] private float _spawnInterval = 2.0f;
 
@@ -20,6 +25,8 @@ namespace Zombies.Gimmick
         private Core.States _states;
         private Core.Interact _interact;
         private float _repairStartTime;
+        private CancellationTokenSource _cts;
+        private bool _canSpawn;
         
         private void Start()
         {
@@ -38,13 +45,26 @@ namespace Zombies.Gimmick
             _interact.InteractEvent += Repair;
             _interact.SetInteractText("Press Hold F to Repair");
             ChangeHealth();
-            
-            SpawnZombieTask(this.GetCancellationTokenOnDestroy()).Forget();
+
+            _canSpawn = _canStartSpawn;
+
+            if (_canSpawn)
+            {
+                _cts = new CancellationTokenSource();
+                SpawnZombieTask(_cts.Token).Forget();
+            }
+        }
+
+        private void OnEnable()
+        {
+            _zombieSpawnListenerSO.OnSetSpawnZombieEvent += SetCanSpawn;
         }
 
         private void OnDisable()
         {
             _interact.InteractEvent -= Repair;
+            _zombieSpawnListenerSO.OnSetSpawnZombieEvent -= SetCanSpawn;
+            _cts?.Cancel();
         }
 
         private void SpawnZombie()
@@ -93,6 +113,28 @@ namespace Zombies.Gimmick
                 await UniTask.Delay(TimeSpan.FromSeconds(_spawnInterval), cancellationToken: token);
                 SpawnZombie();
             }
+        }
+
+        public void SetCanSpawn(bool canSpawn)
+        {
+            _canSpawn = canSpawn;
+            
+            if(_canSpawn)
+            {
+                _cts?.Cancel();
+                _cts = new CancellationTokenSource();
+                SpawnZombieTask(_cts.Token).Forget();
+            }
+            else
+            {
+                _cts?.Cancel();
+            }
+        }
+        
+        public void SetCanSpawn(int listnerID, bool canSpawn)
+        {
+            if(_listnerID != listnerID) return;
+            SetCanSpawn(canSpawn);
         }
     }
 }

@@ -1446,6 +1446,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnTran: {fileID: 2761480444928366573}
   _anim: {fileID: 4841015870944400229}
+  _zombieSpawnListenerSO: {fileID: 11400000, guid: 8d2bac00f2ca5b6469d3068dcc14f251, type: 2}
+  _listnerID: 0
+  _canStartSpawn: 1
   _reepairInterval: 2
   _spawnInterval: 10
 --- !u!61 &7033668121902306381

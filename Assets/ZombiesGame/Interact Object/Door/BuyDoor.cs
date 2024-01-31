@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zombies.Gimmick;
 
 namespace Zombies.InteractObject
 {
     public class BuyDoor : BaseBuyObject
     {
         [SerializeField] private Animator _anim;
+        [SerializeField] private int _sendID = 0;
+        [SerializeField] private ZombieSpawnListenerSO _zombieSpawnListenerSo;
 
         protected override bool Buy(Core.Core tCore)
         {
@@ -25,6 +28,7 @@ namespace Zombies.InteractObject
             await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f,
                 cancellationToken: token);
 
+            _zombieSpawnListenerSo.OnSetSpawnZombieEvent(_sendID, true);
             Destroy(this.gameObject);
         }
     }
