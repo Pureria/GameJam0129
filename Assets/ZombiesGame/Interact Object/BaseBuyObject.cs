@@ -37,8 +37,9 @@ namespace Zombies.InteractObject
             }
         }
 
-        protected virtual void Buy(Core.Core tCore)
+        protected virtual bool Buy(Core.Core tCore)
         {
+            return true;
         }
     }
 }

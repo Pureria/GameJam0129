@@ -9,11 +9,12 @@ namespace Zombies.InteractObject
     {
         [SerializeField] private WallBuySO _wallBuySo;
         
-        protected override void Buy(Core.Core tCore)
+        protected override bool Buy(Core.Core tCore)
         {
             base.Buy(tCore);
-            if (!tCore.GetCoreComponentBool<Inventory>(out Inventory tInventory)) return;
+            if (!tCore.GetCoreComponentBool<Inventory>(out Inventory tInventory)) return false;
             tInventory.AddGun(_wallBuySo.BuyGunPrefab);
+            return true;
         }
     }
 }

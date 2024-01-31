@@ -10,11 +10,12 @@ namespace Zombies.InteractObject
     {
         [SerializeField] private Animator _anim;
 
-        protected override void Buy(Core.Core tCore)
+        protected override bool Buy(Core.Core tCore)
         {
             base.Buy(tCore);
             
             Open(this.GetCancellationTokenOnDestroy()).Forget();
+            return true;
         }
 
         private async UniTask Open(CancellationToken token)

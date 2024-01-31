@@ -19,13 +19,14 @@ namespace Zombies.InteractObject
         
         private CancellationTokenSource _cts;
         
-        protected override void Buy(Core.Core tCore)
+        protected override bool Buy(Core.Core tCore)
         {
             base.Buy(tCore);
             
             _cts = new CancellationTokenSource();
             CancellationToken token = _cts.Token;
             StartRandomBox(token).Forget();
+            return true;
         }
 
         private async UniTask StartRandomBox(CancellationToken token)

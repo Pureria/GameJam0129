@@ -12,9 +12,9 @@ namespace Zombies.InteractObject
         [SerializeField] private int _canBuyCount = 3;
         private int _currentBuyCount = 0;
         
-        protected override void Buy(Core.Core tCore)
+        protected override bool Buy(Core.Core tCore)
         {
-            base.Buy(tCore);
+            if (!base.Buy(tCore)) return false;
             _currentBuyCount++;
 
             if (_currentBuyCount >= _canBuyCount)
@@ -22,6 +22,8 @@ namespace Zombies.InteractObject
                 _interact.SetCanInteract(false);
                 DestroyPerkMachine(this.GetCancellationTokenOnDestroy()).Forget();
             }
+
+            return true;
         }
 
         private async UniTask DestroyPerkMachine(CancellationToken token)

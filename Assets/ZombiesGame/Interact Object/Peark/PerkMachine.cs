@@ -10,13 +10,14 @@ namespace Zombies.InteractObject
     {
         [SerializeField] private BasePerk _perk;
 
-        protected override void Buy(Core.Core tCore)
+        protected override bool Buy(Core.Core tCore)
         {
             base.Buy(tCore);
 
-            if (!CheckCanPerkBuy(tCore, _perk)) return;
-            if (!tCore.GetCoreComponentBool<PerkInventory>(out PerkInventory tPerkInventory)) return;
+            if (!CheckCanPerkBuy(tCore, _perk)) return false;
+            if (!tCore.GetCoreComponentBool<PerkInventory>(out PerkInventory tPerkInventory)) return false;
             tPerkInventory.AddPerk(_perk);
+            return true;
         }
         
         /// <summary>
