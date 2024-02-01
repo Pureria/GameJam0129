@@ -50,6 +50,7 @@ namespace Zombies.Player
         private State.MoveState _moveState;
         private State.LastStandState _lastStandState;
         private State.DeadState _deadState;
+        private State.RunState _runState;
 
         private void Start()
         {
@@ -75,6 +76,7 @@ namespace Zombies.Player
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
             _lastStandState = new LastStandState(_anim, "lastStand", _stateInfo, _stateEventSO, _inputSO);
             _deadState = new DeadState(_anim, "lastStand", _stateInfo, _stateEventSO, _inputSO);
+            _runState = new RunState(_anim, "run", _stateInfo, _stateEventSO, _inputSO);
             
             _stateMachine = new StateMachine(_idleState);
             
@@ -293,12 +295,20 @@ namespace Zombies.Player
                     break;
                 
                 case MoveState:
-                    _stateMachine.ChangeState(_idleState);
+                    if(_inputSO.MoveInput == Vector2.zero)
+                        _stateMachine.ChangeState(_idleState);
+                    else if(_inputSO.DashInput)
+                        _stateMachine.ChangeState(_runState);
                     break;
                 
                 case LastStandState:
                     _states.SetInvisible(false);
                     _stateMachine.ChangeState(_idleState);
+                    break;
+                
+                case RunState:
+                    if(_inputSO.MoveInput == Vector2.zero) _stateMachine.ChangeState(_idleState);
+                    else if(!_inputSO.DashInput) _stateMachine.ChangeState(_moveState);
                     break;
                 
                 default:

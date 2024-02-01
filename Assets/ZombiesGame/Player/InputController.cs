@@ -70,5 +70,17 @@ namespace Zombies.Input
                 _inputSO.ChangeNextWeaponInput = false;
             }
         }
+
+        public void OnDashInput(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                _inputSO.DashInput = true;
+            }
+            else if (context.canceled)
+            {
+                _inputSO.DashInput = false;
+            }
+        }
     }
 }

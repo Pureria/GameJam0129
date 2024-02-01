@@ -27,15 +27,11 @@ namespace Zombies.Player.State
             base.LogicUpdate();
             
             if (_inputSO.MoveInput == Vector2.zero) _endState = true;
+            if (_inputSO.DashInput) _endState = true;
             
             if (_inputSO.InteractInput)
             {
                 //_inputSO.UseInteractInput();
-                _stateEvent.InteractEvent?.Invoke();
-            }
-
-            if (_inputSO.InteractInput)
-            {
                 _stateEvent.InteractEvent?.Invoke();
             }
             

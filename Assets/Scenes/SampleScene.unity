@@ -12496,10 +12496,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1042726993, guid: be17eb390b6589b40a124c6fb7af23ea, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1766833265727197991, guid: be17eb390b6589b40a124c6fb7af23ea, type: 3}
       propertyPath: m_Name
       value: Player

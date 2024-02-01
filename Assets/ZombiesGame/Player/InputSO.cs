@@ -13,6 +13,7 @@ namespace Zombies.Input
         public bool ShotInput;
         public bool ReloadInput;
         public bool ChangeNextWeaponInput;
+        public bool DashInput;
         
         public void UseShotInput() => ShotInput = false;
         public void UseReloadInput() => ReloadInput = false;
