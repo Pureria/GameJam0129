@@ -118,6 +118,11 @@ namespace Zombies.Zombie
 
             return false;
         }
+        
+        public void SetCanInstantiate(bool canInstantiate)
+        {
+            _canInstantiate = canInstantiate;
+        }
 
         private void Dead()
         {
@@ -137,12 +142,12 @@ namespace Zombies.Zombie
         private void GameStart()
         {
             _deadCount = 0;
-            _canInstantiate = true;
+            SetCanInstantiate(true);
         }
 
         private void GameEnd()
         {
-            _canInstantiate = false;
+            SetCanInstantiate(false);
         }
     }
 
