@@ -117,3 +117,5 @@ MonoBehaviour:
   _zombieSpawnCount: 255
   _currentZombies: {fileID: 1427747146}
   _playerCallEvent: {fileID: 11400000, guid: 888c64ccc5e82b74b8084b43b6f89667, type: 2}
+  _gameManageSO: {fileID: 11400000, guid: b09daad77664ae248b0336a55f958018, type: 2}
+  TargetTransform: {fileID: 0}

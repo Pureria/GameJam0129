@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zombies.Manager;
 using Zombies.Player;
 
 namespace Zombies.Zombie
@@ -17,7 +18,6 @@ namespace Zombies.Zombie
         [SerializeField] private float _multipleHealth;
         [SerializeField] private AllZombieInfo _allZombieInfo;
         [SerializeField] private Transform _lastStandMovePoint;
-        [SerializeField] private Transform _playerTran;
         
         [Header("Zombie Spawn Info")]
         [SerializeField] private GameObject _zombiePrefab;
@@ -26,13 +26,17 @@ namespace Zombies.Zombie
 
         [Header("Event")]
         [SerializeField] private PlayerCallEvent _playerCallEvent;
+        [SerializeField] private GameManageSO _gameManageSO;
 
         private int _deadCount;
         private bool _initialize;
+        private bool _canInstantiate;
         
         private List<ZombieListInfo> _zombieList = new List<ZombieListInfo>();
 
-        public Transform TargetTransform;
+        [HideInInspector] public Transform TargetTransform;
+        public Func<Transform> OnGetPlayerTransform;
+        public int DeadCount => _deadCount;
         
         private void Awake()
         {
@@ -40,6 +44,7 @@ namespace Zombies.Zombie
             else Destroy(this.gameObject);
 
             _initialize = false;
+            _canInstantiate = false;
         }
 
         private void Start()
@@ -48,12 +53,13 @@ namespace Zombies.Zombie
             {
                 GameObject zombie = Instantiate(_zombiePrefab, _currentZombies);
                 if (!zombie.TryGetComponent<ZombiesController>(out ZombiesController controller)) continue;
+                controller.OnDeadEvent += Dead;
                 ZombieListInfo zombieListInfo = new ZombieListInfo(zombie, i, controller);
                 _zombieList.Add(zombieListInfo);
             }
             
             _deadCount = 0;
-            TargetTransform = _playerTran;
+            TargetTransform = OnGetPlayerTransform?.Invoke();
             _initialize = true;
         }
 
@@ -64,6 +70,9 @@ namespace Zombies.Zombie
             _playerCallEvent.OnGamePlayEvent += SetTargetPlayer;
             _playerCallEvent.OnGameOverEvent += SetTargetLastStand;
             _playerCallEvent.OnLastStandEvent += SetTargetLastStand;
+            
+            _gameManageSO.OnGameStart += GameStart;
+            _gameManageSO.OnGameEnd += GameEnd;
         }
 
         private void OnDisable()
@@ -73,18 +82,26 @@ namespace Zombies.Zombie
             _playerCallEvent.OnGamePlayEvent -= SetTargetPlayer;
             _playerCallEvent.OnGameOverEvent -= SetTargetLastStand;
             _playerCallEvent.OnLastStandEvent -= SetTargetLastStand;
+
+            _gameManageSO.OnGameStart -= GameStart;
+            _gameManageSO.OnGameEnd -= GameEnd;
+
+            foreach (var zombie in _zombieList)
+            {
+                zombie.OnDeadEvent -= Dead;
+            }
         }
 
         private Transform GetPlayerTran()
         {
-            return _playerTran;
+            return OnGetPlayerTransform?.Invoke();
         }
 
         public float GetMaxHealth()
         {
             //TODO::GameManagerからWabeを取得する
             //現在は仮でWabeを1としている
-            return _baseHealth + (_baseHealth * (_multipleHealth * (1 - 1)));
+            return _baseHealth + (_baseHealth * (_multipleHealth * (_gameManageSO.NowWaveCount - 1)));
         }
 
         public bool ZombieInstantiate(Transform spawnPos, out ZombiesController controller)
@@ -109,12 +126,23 @@ namespace Zombies.Zombie
 
         private void SetTargetPlayer()
         {
-            TargetTransform = _playerTran;
+            TargetTransform = OnGetPlayerTransform?.Invoke();
         }
 
         private void SetTargetLastStand()
         {
             TargetTransform = _lastStandMovePoint;
+        }
+
+        private void GameStart()
+        {
+            _deadCount = 0;
+            _canInstantiate = true;
+        }
+
+        private void GameEnd()
+        {
+            _canInstantiate = false;
         }
     }
 
