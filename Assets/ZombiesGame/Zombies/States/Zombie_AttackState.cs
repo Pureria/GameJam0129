@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Zombies.Zombie
 {
@@ -22,6 +23,7 @@ namespace Zombies.Zombie
             base.Exit();
 
             _stateEventSO.SetCanMoveEvent?.Invoke(true);
+            _stateEventSO.CheckAttackEvent?.Invoke();
         }
 
         public override void LogicUpdate()

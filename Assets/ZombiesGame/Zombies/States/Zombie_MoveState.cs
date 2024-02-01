@@ -20,7 +20,8 @@ namespace Zombies.Zombie
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            
+         
+            _stateEventSO.CheckFlipEvent?.Invoke();
             _stateEventSO.CheckAttackEvent?.Invoke();
         }
 

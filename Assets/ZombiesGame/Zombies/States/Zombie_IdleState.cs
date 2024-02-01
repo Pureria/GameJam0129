@@ -28,6 +28,7 @@ namespace Zombies.Zombie
         {
             base.LogicUpdate();
 
+            _stateEventSO.CheckFlipEvent?.Invoke();
             if (_startTime + _infoSO.IdleWaitTime < Time.time)
             {
                 _endState = true;

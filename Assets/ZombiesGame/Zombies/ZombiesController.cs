@@ -27,6 +27,7 @@ namespace Zombies.Zombie
 
         //バリケードがターゲットになっているか?
         private bool _isBarricade;
+        private bool _isRight;
         
         private Transform _targetTran;
 
@@ -47,6 +48,7 @@ namespace Zombies.Zombie
         private void Awake()
         {
             _stateEventSO = new ZombieStateEventSO();
+            _isRight = true;
         }
 
         /*
@@ -63,6 +65,7 @@ namespace Zombies.Zombie
             _stateEventSO.SetCanMoveEvent -= SetCanMove;
             _stateEventSO.MoveEvent -= Move;
             _stateEventSO.CheckAttackEvent -= CheckAnyTarget;
+            _stateEventSO.CheckFlipEvent -= CheckFlip;
 
             if (_damage != null)
             {
@@ -104,6 +107,7 @@ namespace Zombies.Zombie
             _stateEventSO.SetCanMoveEvent += SetCanMove;
             _stateEventSO.MoveEvent += Move;
             _stateEventSO.CheckAttackEvent += CheckAnyTarget;
+            _stateEventSO.CheckFlipEvent += CheckFlip;
             _damage._damageEvent += Damage;
             
             _idleState = new Zombie_IdleState(_anim, "idle", _infoSo, _stateEventSO);
@@ -145,6 +149,31 @@ namespace Zombies.Zombie
                 CheckTarget();
         }
 
+        private void Flip()
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = scale.x * -1;
+            transform.localScale = scale;
+            _isRight = !_isRight;
+        }
+
+        private void CheckFlip()
+        {
+            Transform targetTran = _targetTran;
+            if(!_isBarricade) targetTran = ZombieManager.Instance.TargetTransform;
+            
+            Vector2 pos = transform.position;
+            Vector2 tPos = targetTran.position;
+            if (_isRight)
+            {
+                if (tPos.x < pos.x) Flip();
+            }
+            else
+            {
+                if (tPos.x > pos.x) Flip();
+            }
+        }
+
         /// <summary>
         /// 攻撃可能範囲に攻撃可能なものがあるか確認
         /// </summary>
@@ -163,11 +192,14 @@ namespace Zombies.Zombie
                 Core.Damage tDamage = tcore.GetCoreComponent<Core.Damage>();
                 if(tDamage == null) continue;
 
-                //ダメージステータスに遷移
-                _stateMachine.ChangeState(_attackState);
-                //canMoveをfalseにする
-                //ダメージステータスを抜けたらTrueにする
-                tDamage.IsDamage(_infoSo.DamageAmount, _core);
+                if (_stateMachine.CurrentState != _attackState)
+                {
+                    _stateMachine.ChangeState(_attackState);
+                }
+                else
+                {
+                    tDamage.IsDamage(_infoSo.DamageAmount, _core);
+                }
                 return;
             }
         }
@@ -197,8 +229,14 @@ namespace Zombies.Zombie
                     Core.Damage tDamage = tcore.GetCoreComponent<Core.Damage>();
                     if(tDamage == null) continue;
 
-                    _stateMachine.ChangeState(_attackState);
-                    tDamage.IsDamage(_infoSo.DamageAmount, _core);
+                    if (_stateMachine.CurrentState != _attackState)
+                    {
+                        _stateMachine.ChangeState(_attackState);
+                    }
+                    else
+                    {
+                        tDamage.IsDamage(_infoSo.DamageAmount, _core);
+                    }
                     return;
                 }
             }

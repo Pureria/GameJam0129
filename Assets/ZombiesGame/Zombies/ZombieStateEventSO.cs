@@ -10,5 +10,6 @@ namespace Zombies.Zombie
         public Action MoveEvent;
         public Action<bool> SetCanMoveEvent;
         public Action CheckAttackEvent;
+        public Action CheckFlipEvent;
     }
 }
