@@ -142,6 +142,9 @@ namespace Zombies.Zombie
         /// </summary>
         private void CheckTarget()
         {
+            //ラストスタンド中はプレイヤーを攻撃しない
+            if (ZombieManager.Instance.LastStand) return;
+            
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _infoSo.AttackDistance, _playerLayer);;
             
             foreach (Collider2D hit in hits)

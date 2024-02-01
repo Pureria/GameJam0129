@@ -31,12 +31,14 @@ namespace Zombies.Zombie
         private int _deadCount;
         private bool _initialize;
         private bool _canInstantiate;
+        private bool _lastStand;
         
         private List<ZombieListInfo> _zombieList = new List<ZombieListInfo>();
 
         [HideInInspector] public Transform TargetTransform;
         public Func<Transform> OnGetPlayerTransform;
         public int DeadCount => _deadCount;
+        public bool LastStand => _lastStand;
         
         private void Awake()
         {
@@ -45,6 +47,7 @@ namespace Zombies.Zombie
 
             _initialize = false;
             _canInstantiate = false;
+            _lastStand = false;
         }
 
         private void Start()
@@ -131,11 +134,13 @@ namespace Zombies.Zombie
 
         private void SetTargetPlayer()
         {
+            _lastStand = false;
             TargetTransform = OnGetPlayerTransform?.Invoke();
         }
 
         private void SetTargetLastStand()
         {
+            _lastStand = true;
             TargetTransform = _lastStandMovePoint;
         }
 
