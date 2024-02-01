@@ -18,7 +18,7 @@ TagManager:
   - Barricade
   - Wall
   - Ammo
-  - 
+  - NavMesh
   - 
   - 
   - 
@@ -50,9 +50,6 @@ TagManager:
   - name: Player
     uniqueID: 2703279003
     locked: 0
-  - name: Object
-    uniqueID: 275940119
-    locked: 0
   - name: Gun
     uniqueID: 1292692075
     locked: 0
@@ -61,6 +58,9 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 1417761133
+    locked: 0
+  - name: Object
+    uniqueID: 275940119
     locked: 0
   - name: UI
     uniqueID: 3768177997
