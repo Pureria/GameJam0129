@@ -133,7 +133,9 @@ namespace Zombies.Player
             Vector3 gunPos = _gunRootTran.position;
             Vector3 gunLookPos = lookPos - gunPos;
             float angle = Mathf.Atan2(gunLookPos.y, gunLookPos.x) * Mathf.Rad2Deg;
-            _gunRootTran.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //_gunRootTran.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Transform tran = _inventory.GetActiveGun().transform;
+            tran.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             
             //インタラクトできるものがあるか
             FindCanInteract();
@@ -223,6 +225,11 @@ namespace Zombies.Player
             Vector3 scale = transform.localScale;
             scale.x = scale.x * -1;
             transform.localScale = scale;
+            Transform gunRoot = _inventory.GetActiveGun().transform;
+            scale = gunRoot.localScale;
+            scale.x = scale.x * -1;
+            scale.y = scale.y * -1;
+            gunRoot.localScale = scale;
             _isRight = !_isRight;
 
             _anim.SetBool("isPlayerRight", _isRight);

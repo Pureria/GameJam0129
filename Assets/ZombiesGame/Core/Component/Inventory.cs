@@ -63,6 +63,7 @@ namespace Zombies.Core
         public void AddGun(GameObject getGun)
         {
             GameObject gun = Instantiate(getGun, _gunRootTransform);
+            gun.transform.localPosition = getGun.transform.localPosition;
             gun.transform.parent = _gunRootTransform;
             if (gun.TryGetComponent<Gun.Gun>(out Gun.Gun gunScript))
             {
@@ -114,6 +115,7 @@ namespace Zombies.Core
             _guns.Clear();
             
             GameObject gun = Instantiate(initGun, _gunRootTransform);
+            gun.transform.localPosition = initGun.transform.localPosition;
             gun.transform.parent = _gunRootTransform;
             if (gun.TryGetComponent<Gun.Gun>(out Gun.Gun gunScript))
             {
