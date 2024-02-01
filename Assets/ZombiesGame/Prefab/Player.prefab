@@ -1044,6 +1044,7 @@ MonoBehaviour:
   _currentPerkSO: {fileID: 11400000, guid: da44bb062c084e641b82d07ad9e036ba, type: 2}
   _callEvent: {fileID: 11400000, guid: 888c64ccc5e82b74b8084b43b6f89667, type: 2}
   _manageSo: {fileID: 11400000, guid: b09daad77664ae248b0336a55f958018, type: 2}
+  _shakeSO: {fileID: 11400000, guid: 14dcfac5541c04848a4847e93cde2ad1, type: 2}
   _anim: {fileID: 1766833265727197999}
 --- !u!1 &2645508739597527918
 GameObject:

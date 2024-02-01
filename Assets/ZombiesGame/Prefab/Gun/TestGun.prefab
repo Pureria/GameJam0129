@@ -102,7 +102,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1292692075
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0.76108503, a: 1}
@@ -165,3 +165,4 @@ MonoBehaviour:
   _muzzle: {fileID: 3636460061273259679}
   _ammoPrefab: {fileID: 5043981265018204378, guid: 2e5b9752e1571854bbccf3f7ca6ec2ff, type: 3}
   _gunEventSO: {fileID: 11400000, guid: 81033141d94b9ea4ab759654a8823af7, type: 2}
+  _shakeSO: {fileID: 11400000, guid: 14dcfac5541c04848a4847e93cde2ad1, type: 2}

@@ -166,6 +166,7 @@ MonoBehaviour:
   _muzzle: {fileID: 3636460061273259679}
   _ammoPrefab: {fileID: 5043981265018204378, guid: 2e5b9752e1571854bbccf3f7ca6ec2ff, type: 3}
   _gunEventSO: {fileID: 11400000, guid: 81033141d94b9ea4ab759654a8823af7, type: 2}
+  _shakeSO: {fileID: 11400000, guid: 14dcfac5541c04848a4847e93cde2ad1, type: 2}
 --- !u!135 &1038424144189080011
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zombies.Core;
+using Zombies.GameCamera;
 using Zombies.Perk;
 
 namespace Zombies.Gun
@@ -13,6 +14,7 @@ namespace Zombies.Gun
         [SerializeField] private Transform _muzzle;
         [SerializeField] private GameObject _ammoPrefab;
         [SerializeField] private GunEventSO _gunEventSO;
+        [SerializeField] private CameraShakeSO _shakeSO;
         
         /*マガジン内の弾*/ private int _currentMagazine;
         /*残りの弾*/ private int _currentAmmo;
@@ -67,6 +69,7 @@ namespace Zombies.Gun
             _gunEventSO.OnChangeCurrentMagazineEvent?.Invoke(_currentMagazine);
             
             OnShotEvent?.Invoke();
+            _shakeSO.OnLowPowerShake?.Invoke();
         }
 
         public void StartReload()

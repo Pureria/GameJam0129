@@ -9,5 +9,13 @@ namespace Zombies.Gimmick
     public class ZombieSpawnListenerSO : ScriptableObject
     {
         public Action<int,bool> OnSetSpawnZombieEvent;
+
+        public void OnSetSpawnZombie(List<int> sendIDs, bool isSpawn)
+        {
+            foreach (int sendID in sendIDs)
+            {
+                OnSetSpawnZombieEvent?.Invoke(sendID, isSpawn);
+            }
+        }
     }
 }

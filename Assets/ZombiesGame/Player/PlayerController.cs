@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Zombies.Input;
 using Zombies.Core;
+using Zombies.GameCamera;
 using Zombies.Manager;
 using Zombies.Perk;
 using Zombies.Player.State;
@@ -30,6 +31,7 @@ namespace Zombies.Player
         [SerializeField] private CurrentPerkSO _currentPerkSO;
         [SerializeField] private PlayerCallEvent _callEvent;
         [SerializeField] private GameManageSO _manageSo;
+        [SerializeField] private CameraShakeSO _shakeSO;
 
         [Header("Component")]
         [SerializeField] private Animator _anim;
@@ -261,12 +263,17 @@ namespace Zombies.Player
             _playerProgressSO.ChangeHealth(_states.GetMaxHealth());
         }
 
-        private void Damage() { Debug.Log($"{transform.name} : Damage"); }
+        private void Damage()
+        {
+            Debug.Log($"{transform.name} : Damage");
+            _shakeSO.OnMiddlePowerShake?.Invoke();
+        }
 
         private void Dead()
         {
             Debug.Log($"{transform.name} : Dead");
 
+            _shakeSO.OnHighPowerShake?.Invoke();
             if (_perkInventory.CheckPerk<RevivePerk>())
             {
                 _perkInventory.AllDelPerk();

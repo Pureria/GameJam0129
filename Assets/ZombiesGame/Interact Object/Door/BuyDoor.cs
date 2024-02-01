@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -29,10 +30,8 @@ namespace Zombies.InteractObject
                 cancellationToken: token);
 
             //_zombieSpawnListenerSo.OnSetSpawnZombieEvent(_sendID, true);
-            foreach (int id in _sendID)
-            {
-                _zombieSpawnListenerSo.OnSetSpawnZombieEvent(id, true);
-            }
+            _zombieSpawnListenerSo.OnSetSpawnZombie(_sendID, true);
+            
             Destroy(this.gameObject);
         }
     }
