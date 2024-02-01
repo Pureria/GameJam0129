@@ -64,6 +64,7 @@ namespace Zombies.Zombie
             _deadCount = 0;
             TargetTransform = OnGetPlayerTransform?.Invoke();
             _initialize = true;
+            _gameManageSO.IsZombieInit = true;
         }
 
         private void OnEnable()

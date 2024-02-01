@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Zombies.Input;
 using Zombies.Core;
+using Zombies.Manager;
 using Zombies.Perk;
 using Zombies.Player.State;
 using Zombies.State;
@@ -28,11 +29,13 @@ namespace Zombies.Player
         [SerializeField] private PlayerStateEvent _stateEventSO;
         [SerializeField] private CurrentPerkSO _currentPerkSO;
         [SerializeField] private PlayerCallEvent _callEvent;
+        [SerializeField] private GameManageSO _manageSo;
 
         [Header("Component")]
         [SerializeField] private Animator _anim;
 
         private bool _isRight;
+        private bool _isGamePlay;
         
         private Core.Core _core;
         private Movement _movement;
@@ -46,6 +49,7 @@ namespace Zombies.Player
         private State.IdleState _idleState;
         private State.MoveState _moveState;
         private State.LastStandState _lastStandState;
+        private State.DeadState _deadState;
 
         private void Start()
         {
@@ -70,13 +74,15 @@ namespace Zombies.Player
             _idleState = new IdleState(_anim,"idle", _stateInfo, _stateEventSO, _inputSO);
             _moveState = new MoveState(_anim, "move", _stateInfo, _stateEventSO, _inputSO);
             _lastStandState = new LastStandState(_anim, "lastStand", _stateInfo, _stateEventSO, _inputSO);
-
+            _deadState = new DeadState(_anim, "lastStand", _stateInfo, _stateEventSO, _inputSO);
+            
             _stateMachine = new StateMachine(_idleState);
             
             if(_stateMachine == null) Debug.LogError("StateMachineが存在しません。");
             _isRight = true;
 
             _playerProgressSO.Health = _states.Health;
+            _manageSo.IsPlayerInit = true;
         }
         
         private void OnEnable()
@@ -88,6 +94,8 @@ namespace Zombies.Player
             _stateEventSO.ChangeWeaponEvent += ChangeWeapon;
             _stateEventSO.GamePlayEvent += CallGamePlayEvent;
             _stateEventSO.LastStandEvent += CallLastStandEvent;
+            _manageSo.OnGameStart += GameStart;
+            _manageSo.OnGameEnd += GameEnd;
         }
 
         private void OnDisable()
@@ -101,10 +109,14 @@ namespace Zombies.Player
             _perkInventory.RefleshPerkEvent -= _currentPerkSO.RefleshPerk;
             _stateEventSO.GamePlayEvent -= CallGamePlayEvent;
             _stateEventSO.LastStandEvent -= CallLastStandEvent;
+            _manageSo.OnGameStart -= GameStart;
+            _manageSo.OnGameEnd -= GameEnd;
         }
 
         private void Update()
         {
+            if (!_isGamePlay) return;
+            
             _stateMachine.LogicUpdate();
             
             if (_stateMachine.CurrentState.EndState)
@@ -127,6 +139,8 @@ namespace Zombies.Player
 
         private void FixedUpdate()
         {
+            if (!_isGamePlay) return;
+            
             _stateMachine.FixedUpdate();
         }
         
@@ -233,6 +247,7 @@ namespace Zombies.Player
             {
                 //ゲームオーバーイベント
                 Debug.Log("ゲームオーバー");
+                _stateMachine.ChangeState(_deadState);
                 _callEvent.OnGameOverEvent?.Invoke();
             }
             
@@ -290,5 +305,13 @@ namespace Zombies.Player
                     break;
             }
         }
+
+        private void GameStart()
+        {
+            _isGamePlay = true;
+            _stateMachine.ChangeState(_idleState);
+        }
+
+        private void GameEnd() { _isGamePlay = false;}
     }
 }

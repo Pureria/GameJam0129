@@ -12,5 +12,8 @@ namespace Zombies.Manager
         public Action OnGameEnd;
 
         public int NowWaveCount;
+
+        public bool IsPlayerInit;
+        public bool IsZombieInit;
     }
 }

@@ -15,6 +15,7 @@ namespace Zombies.Manager
 
         [SerializeField] private ZombieManager _zombieManager;
 
+        private bool _isStartGame;
         private bool _nowGame;
         
         private int _waveCount;
@@ -23,6 +24,9 @@ namespace Zombies.Manager
         private void Awake()
         {
             _nowGame = false;
+            _gameManageSO.IsPlayerInit = false;
+            _gameManageSO.IsZombieInit = false;
+            _isStartGame = false;
         }
 
         private void OnEnable()
@@ -37,12 +41,21 @@ namespace Zombies.Manager
 
         private void Start()
         {
-            GameStart();
+            //GameStart();
         }
 
         private void Update()
         {
-            if (!_nowGame) return;
+            if (!_nowGame)
+            {
+                if (_isStartGame) return;
+                if(_gameManageSO.IsPlayerInit && _gameManageSO.IsZombieInit)
+                {
+                    GameStart();
+                    _isStartGame = true;
+                }
+                return;
+            }
             
             //waveCountは1Wabeはゾンビ10体、2Wabeはゾンビ15体・・・と5体ずつ必要数が増える
             if (_zombieManager.DeadCount == _waveCount * 5 + 5)
@@ -64,6 +77,8 @@ namespace Zombies.Manager
         {
             _nowGame = false;
             _gameManageSO.OnGameEnd?.Invoke();
+            _gameManageSO.IsPlayerInit = false;
+            _gameManageSO.IsZombieInit = false;
         }
 
         private Transform GetPlayerTransform()
