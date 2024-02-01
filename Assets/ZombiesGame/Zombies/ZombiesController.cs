@@ -72,11 +72,19 @@ namespace Zombies.Zombie
             OnDestroyEvent?.Invoke(this);
         }
 
-        public void Initialize()
+        public void Initialize(bool isRun)
         {
             _states.Initialize(ZombieManager.Instance.GetMaxHealth(), 0, false, Dead, Damage, ChangeHealth);
             _agent.SetCanMove(true);
-            _agent.SetSpeed(_infoSo.WalkSpeed);
+
+            if (isRun)
+            {
+                _agent.SetSpeed(_infoSo.RunSPeed);
+            }
+            else
+            {
+                _agent.SetSpeed(_infoSo.WalkSpeed);
+            }
             _isBarricade = true;
 
             _stateMachine.ChangeState(_idleState);

@@ -115,7 +115,7 @@ namespace Zombies.Zombie
             foreach (var zombie in _zombieList)
             {
                 if (zombie.IsActive) continue;
-                zombie.Instantiate(spawnPos);
+                zombie.Instantiate(spawnPos, _gameManageSO.NowWaveCount);
                 controller = zombie.Controller;
                 return true;
             }
@@ -192,10 +192,30 @@ namespace Zombies.Zombie
             Controller.OnDeadEvent -= Dead;
         }
 
-        public void Instantiate(Transform spawnPos)
+        public void Instantiate(Transform spawnPos, int nowWave)
         {
+            bool run = false;
+            //ラウンドが3までは0が入る、10ラウンドまでは0~1が入りラウンドが上がるごとに1になる確率が上がる、10ラウンド以降は常に1
+            if ( nowWave < 3)
+            {
+                run = false;
+            }
+            else if (nowWave < 10)
+            {
+                //run = UnityEngine.Random.Range(0, 2);
+                float random = UnityEngine.Random.Range(0, 100);
+                float p = ((float)nowWave / 10) * 100f;
+                if (p >= random) run = true;
+                else run = false;
+
+            }
+            else
+            {
+                run = true;
+            }
+            
             IsActive = true;
-            Controller.Initialize();
+            Controller.Initialize(run);
             
             //取得したローカル座標をワールド座標に変換して代入
             ZombieObj.transform.position = spawnPos.position;
