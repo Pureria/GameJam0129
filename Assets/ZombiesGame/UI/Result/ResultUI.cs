@@ -57,17 +57,25 @@ namespace Zombies.UI
             //クリックされるまで待つ
             await UniTask.WaitUntil(() => _isClickButton, cancellationToken: token);
 
+            /*
             _anim.Play("Close");
             
             await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f,
                 cancellationToken: token);
+                */
 
             _popupObject.SetActive(false);
+            SceneChangeTitle();
         }
 
         public void OnClickTitle()
         {
             _isClickButton = true;
+        }
+
+        private void SceneChangeTitle()
+        {
+            SceneManager.ChangeSceneWait(1, SceneChangeEffect.Fade, 0.5f);
         }
     }
 }
