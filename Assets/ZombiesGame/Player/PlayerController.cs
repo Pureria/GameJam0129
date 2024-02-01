@@ -52,6 +52,8 @@ namespace Zombies.Player
         private State.DeadState _deadState;
         private State.RunState _runState;
 
+        public PlayerCallEvent CallEvent => _callEvent;
+        
         private void Start()
         {
             _core = this.GetComponentInChildren<Core.Core>();

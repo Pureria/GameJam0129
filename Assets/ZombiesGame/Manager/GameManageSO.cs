@@ -15,5 +15,7 @@ namespace Zombies.Manager
 
         public bool IsPlayerInit;
         public bool IsZombieInit;
+
+        public float GameTime;
     }
 }

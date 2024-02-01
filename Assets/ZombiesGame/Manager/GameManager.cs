@@ -19,6 +19,8 @@ namespace Zombies.Manager
         private bool _nowGame;
         
         private int _waveCount;
+
+        private float _startTime;
         public int Wave => _waveCount;
 
         private void Awake()
@@ -32,11 +34,13 @@ namespace Zombies.Manager
         private void OnEnable()
         {
             _zombieManager.OnGetPlayerTransform += GetPlayerTransform;
+            _playerController.CallEvent.OnGameOverEvent += GameEnd;
         }
 
         private void OnDisable()
         {
             _zombieManager.OnGetPlayerTransform -= GetPlayerTransform;
+            _playerController.CallEvent.OnGameOverEvent -= GameEnd;
         }
 
         private void Start()
@@ -67,6 +71,7 @@ namespace Zombies.Manager
 
         private void GameStart()
         {
+            _startTime = Time.time;
             _waveCount = 1;
             _gameManageSO.NowWaveCount = 1;
             _nowGame = true;
@@ -75,6 +80,7 @@ namespace Zombies.Manager
 
         private void GameEnd()
         {
+            _gameManageSO.GameTime = Time.time - _startTime;
             _nowGame = false;
             _gameManageSO.OnGameEnd?.Invoke();
             _gameManageSO.IsPlayerInit = false;
