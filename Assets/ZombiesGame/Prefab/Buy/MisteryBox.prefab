@@ -306,10 +306,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buyObjectInfoSO: {fileID: 11400000, guid: 4991db9439c2d7c409004ae0ec0d1117, type: 2}
   _guns:
-  - {fileID: 7090124978041778135, guid: f893190f02b714f4aa276384561b821a, type: 3}
-  - {fileID: 7090124978041778135, guid: c75885bfd204fe040b2c82289b0476ad, type: 3}
   - {fileID: 7090124978041778135, guid: b2551b8d27e6f32479d769cb41be9df1, type: 3}
   - {fileID: 7090124978041778135, guid: 22eb7125e5d7d234e8040e496cf343e7, type: 3}
+  - {fileID: 7090124978041778135, guid: b9f3e38f4cbe20b4b9b5adad92f4c258, type: 3}
+  - {fileID: 7090124978041778135, guid: d73aa0940e7807741b214d375f59c20b, type: 3}
+  - {fileID: 7090124978041778135, guid: 30d9f777ada853744a72c8487ecc6ed7, type: 3}
+  - {fileID: 7090124978041778135, guid: af83aef64219de8418cb50b43ffcebd3, type: 3}
   _anim: {fileID: 1840232859681541583}
 --- !u!208 &7422907422628460409
 NavMeshObstacle:
