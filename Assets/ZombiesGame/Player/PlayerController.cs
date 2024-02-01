@@ -71,6 +71,7 @@ namespace Zombies.Player
 
             _states.Initialize(_stateInfo.InitHealth, _stateInfo.HealInterval, true, Dead, Damage, ChangeHealth);
             _inventory.Initialize(_stateInfo.InitMoney, _stateInfo.InitGun, _gunRootTran, _inventoryProgressSO);
+            _inventory.GetGunLocalScaleEvent += GetLocalScale;
             _interact.UseInteractEvent += _inputSO.UseInteractInput;
             _perkInventory.RefleshPerkEvent += _currentPerkSO.RefleshPerk;
             
@@ -227,14 +228,31 @@ namespace Zombies.Player
             Vector3 scale = transform.localScale;
             scale.x = scale.x * -1;
             transform.localScale = scale;
+            scale.y = scale.x;
+            _inventory.GetActiveGun().transform.localScale = scale;
+            /*
             Transform gunRoot = _inventory.GetActiveGun().transform;
             scale = gunRoot.localScale;
             scale.x = scale.x * -1;
             scale.y = scale.y * -1;
             gunRoot.localScale = scale;
+            */
+            
             _isRight = !_isRight;
-
             _anim.SetBool("isPlayerRight", _isRight);
+        }
+
+        private Vector3 GetLocalScale()
+        {
+            Vector3 ret = Vector3.one;
+
+            if (!_isRight)
+            {
+                ret.x = -1;
+                ret.y = -1;
+            }
+
+            return ret;
         }
 
         private void ChangeHealth()

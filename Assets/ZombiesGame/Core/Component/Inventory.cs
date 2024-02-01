@@ -19,6 +19,7 @@ namespace Zombies.Core
         private PerkInventory _perkInventory;
         
         public int Money => _nowMoney;
+        public Func<Vector3> GetGunLocalScaleEvent; 
 
         private void Start()
         {
@@ -75,6 +76,7 @@ namespace Zombies.Core
                     _guns[_nowWeaponIndex] = gunScript;
                     Destroy(delGunObj);
                     _guns[_nowWeaponIndex].Initialize(SetProgressData);
+                    SetActiveGun(_nowWeaponIndex);
                 }
                 else
                 {
@@ -145,6 +147,10 @@ namespace Zombies.Core
         {
             AllWeaponHide();
             _guns[index].gameObject.SetActive(true);
+            
+            Vector3 scale = Vector3.one;
+            if(GetGunLocalScaleEvent != null) scale = GetGunLocalScaleEvent();
+            _guns[index].transform.localScale = scale;
             
             SetProgressData();
         }
