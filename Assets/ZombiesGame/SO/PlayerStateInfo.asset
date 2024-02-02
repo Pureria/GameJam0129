@@ -20,4 +20,4 @@ MonoBehaviour:
   _interactDistance: 1.5
   _lastStandTime: 5
   _initMoney: 20000
-  _initGun: {fileID: 7090124978041778135, guid: 22eb7125e5d7d234e8040e496cf343e7, type: 3}
+  _initGun: {fileID: 7090124978041778135, guid: d73aa0940e7807741b214d375f59c20b, type: 3}

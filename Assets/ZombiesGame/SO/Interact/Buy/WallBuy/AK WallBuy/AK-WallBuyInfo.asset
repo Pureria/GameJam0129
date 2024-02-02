@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c18189ed408cac4d82e578bb766bc61, type: 3}
-  m_Name: P90
+  m_Script: {fileID: 11500000, guid: 126c7bff6fa53424c8f42b9b325b0564, type: 3}
+  m_Name: AK-WallBuyInfo
   m_EditorClassIdentifier: 
-  _gunName: P80
-  _magazineSize: 50
-  _maxAmmo: 300
-  _damage: 30
-  _fireRate: 0.02
-  _reloadTime: 3
-  _ammoSpeed: 40
-  _isFullAuto: 1
+  buyGunPrefab: {fileID: 7090124978041778135, guid: b2551b8d27e6f32479d769cb41be9df1, type: 3}
