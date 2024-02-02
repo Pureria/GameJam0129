@@ -23,8 +23,8 @@ namespace Zombies.Core
 
         private void Start()
         {
-            _nowMoney = 0;
-            _nowWeaponIndex = 0;
+            //_nowMoney = 0;
+            //_nowWeaponIndex = 0;
             
             _core.GetCoreComponent<PerkInventory>(ref _perkInventory);
         }

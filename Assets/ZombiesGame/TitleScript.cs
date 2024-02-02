@@ -11,7 +11,7 @@ namespace Zombies.Title
         
         public void SceneChangeGame()
         {
-            SceneManager.ChangeSceneWait(2, SceneChangeEffect.Fade, _scTime);
+            SceneManager.ChangeSceneWait(1, SceneChangeEffect.Fade, _scTime);
         }
     }
 }

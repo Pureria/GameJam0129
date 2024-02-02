@@ -47,7 +47,8 @@ namespace Zombies.UI
             _isClickButton = false;
             
             //結果を表示
-            _timeText.text = $"{_manageSO.GameTime.ToString("F2")}";
+            //小数点以下2桁まで表示
+            _timeText.text = $"{_manageSO.GameTime:0.00}";
             _wabeText.text = $"{_manageSO.NowWaveCount}";
             
             _anim.Play("Open");
@@ -75,7 +76,7 @@ namespace Zombies.UI
 
         private void SceneChangeTitle()
         {
-            SceneManager.ChangeSceneWait(1, SceneChangeEffect.Fade, 0.5f);
+            SceneManager.ChangeSceneWait(0, SceneChangeEffect.Fade, 0.5f);
         }
     }
 }
