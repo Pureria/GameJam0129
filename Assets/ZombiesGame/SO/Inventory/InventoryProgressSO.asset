@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: InventoryProgressSO
   m_EditorClassIdentifier: 
   NowMoney: 500
-  NowGunName: TestGun
+  GunList:
+  - N1911
+  NowGunName: N1911
   CurrentMagazine: 7
-  CurrentAmmo: 35
+  CurrentAmmo: 49
   NowReload: 0
-  ReloadProgress: 0.9978854
+  ReloadProgress: 0
